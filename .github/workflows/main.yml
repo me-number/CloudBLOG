@@ -59,7 +59,7 @@ jobs:
         run: |
           cd web-dist
           rm -rf dist
-          cp -r ../alist-web .
+          cp -r ../alist-web/dist .
           git add .
           git config --local user.email "13064145510@wo.cn"
           git config --local user.name "me-number"
@@ -71,6 +71,6 @@ jobs:
         with:
           github_token: ${{ secrets.ACCESS_TOKEN }}
           branch: dev
-          directory: web-dist
+          directory: dist
           repository: me-number/cloud-pan
           force: true
