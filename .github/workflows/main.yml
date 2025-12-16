@@ -7,6 +7,10 @@ on:
 
 jobs:
   build:
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
     strategy:
       matrix:
         platform: [ubuntu-latest]
@@ -35,15 +39,6 @@ jobs:
           fetch-depth: 0
           submodules: recursive
 
-      - name: Checkout dist repo
-        uses: actions/checkout@v4
-        with:
-          repository: alist-org/web-dist
-          ref: dev
-          path: web-dist
-          persist-credentials: false
-          fetch-depth: 0
-
       - name: Build
         run: |
           cd alist-web
@@ -55,23 +50,11 @@ jobs:
           CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
           CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
 
-      - name: Commit dist
-        run: |
-          cd web-dist
-          rm -rf dist
-          cp -r ../alist-web/dist/* .
-          echo "cloud-pan.zhang-wen-tao.cn" > CNAME
-          git add .
-          git config --local user.email "13064145510@wo.cn"
-          git config --local user.name "me-number"
-          git commit --amend -m "upload dev dist"
-          cd ..
-
-      - name: Upload dist files
-        uses: ad-m/github-push-action@master
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.ACCESS_TOKEN }}
-          branch: dev
-          directory: web-dist
-          repository: me-number/cloud-pan
-          force: true
+          path: alist-web/dist
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
