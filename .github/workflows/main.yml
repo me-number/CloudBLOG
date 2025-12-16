@@ -60,6 +60,7 @@ jobs:
           cd web-dist
           rm -rf dist
           cp -r ../alist-web/dist .
+          echo "cloud-pan.zhang-wen-tao.cn" > CNAME
           git add .
           git config --local user.email "13064145510@wo.cn"
           git config --local user.name "me-number"
@@ -71,6 +72,6 @@ jobs:
         with:
           github_token: ${{ secrets.ACCESS_TOKEN }}
           branch: dev
-          directory: ./
+          directory: web-dist
           repository: me-number/cloud-pan
           force: true
