@@ -84,7 +84,7 @@ export default defineConfig({
     host: "0.0.0.0",
     proxy: {
       "/api": {
-        target: "https://alist.xiaoya.pro",
+        target: "https://5331.772013.xyz",
         changeOrigin: true,
         // rewrite: (path) => path.replace(/^\/api/, ""),
       },
