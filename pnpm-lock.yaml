@@ -10,6 +10,7 @@ dependencies:
     version: 2.0.6
   cheerio:
     specifier: ^1.0.0-rc.12
+    specifier: ^1.1.2
     version: 1.1.2
   gulp:
     specifier: ^4.0.2
@@ -97,6 +98,7 @@ dependencies:
     version: 0.6.0
   yarn:
     specifier: ^1.22.22
+    specifier: ^1.22.19
     version: 1.22.22
 
 devDependencies:
