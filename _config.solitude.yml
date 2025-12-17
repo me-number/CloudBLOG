@@ -18,7 +18,7 @@ nav:
   # 左侧盒子
   group:
     项目:
-      Solitude: https://github.com/everfu/hexo-theme-solitude || /solitude-demo/img/logo.png # name: url || icon
+      Solitude: https://github.com/everfu/hexo-theme-solitude || /img/logo.png # name: url || icon
 
   # Menu
   # 菜单
