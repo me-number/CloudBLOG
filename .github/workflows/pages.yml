@@ -1,0 +1,113 @@
+name: Pages Project Automation
+description: Automate the setup, development, and build process for pages project
+
+inputs:
+  working-directory:
+    description: 'Working directory for the project (default: .)'
+    required: false
+    default: '.'
+  
+  run-dev-server:
+    description: 'Whether to run the development server (default: false)'
+    required: false
+    default: 'false'
+  
+  build-project:
+    description: 'Whether to build the project (default: true)'
+    required: false
+    default: 'true'
+
+runs:
+  using: "composite"
+  steps:
+    - name: Change to pages directory
+      shell: bash
+      run: |
+        if [ ! -d "${{ inputs.working-directory }}/pages" ]; then
+          echo "Error: pages directory not found in ${{ inputs.working-directory }}"
+          exit 1
+        fi
+        cd ${{ inputs.working-directory }}/pages
+        echo "Changed to pages directory: $(pwd)"
+
+    - name: Install project dependencies
+      shell: bash
+      run: |
+        cd ${{ inputs.working-directory }}/pages
+        echo "Installing project dependencies..."
+        npm install
+        echo "Dependencies installed successfully!"
+
+    - name: Start development server
+      if: inputs.run-dev-server == 'true'
+      shell: bash
+      run: |
+        cd ${{ inputs.working-directory }}/pages
+        echo "Starting development server..."
+        timeout 60 npm run dev || echo "Development server started (timeout reached)"
+
+    - name: Build production version
+      if: inputs.build-project == 'true'
+      shell: bash
+      run: |
+        cd ${{ inputs.working-directory }}/pages
+        echo "Building production version..."
+        npm run build
+        echo "Build completed!"
+
+    - name: Verify build output
+      if: inputs.build-project == 'true'
+      shell: bash
+      run: |
+        cd ${{ inputs.working-directory }}/pages
+        if [ -d "dist" ]; then
+          echo "Build output verified: dist directory exists"
+          echo "Files in dist directory:"
+          ls -la dist/
+        else
+          echo "Error: dist directory does not exist after build"
+          exit 1
+        fi
+
+    - name: Prepare for GitHub Pages deployment
+      if: inputs.build-project == 'true'
+      shell: bash
+      run: |
+        cd ${{ inputs.working-directory }}/pages
+        if [ -d "dist" ]; then
+          echo "Build artifacts are located in pages/dist directory"
+          echo "These files can be deployed to GitHub Pages"
+          echo "To deploy to GitHub Pages, configure your repository settings:"
+          echo "1. Go to Settings > Pages"
+          echo "2. Select 'Deploy from a branch'"
+          echo "3. Choose 'gh-pages' branch and '/root' folder"
+          echo "4. Run 'gh-pages -d dist' to push build files to gh-pages branch"
+        else
+          echo "Error: dist directory does not exist"
+          exit 1
+        fi
+
+    - name: Show next steps for GitHub Pages
+      if: inputs.build-project == 'true'
+      shell: bash
+      run: |
+        echo "========================================="
+        echo "NEXT STEPS FOR GITHUB PAGES DEPLOYMENT:"
+        echo "========================================="
+        echo "1. Install gh-pages if not already installed:"
+        echo "   npm install --save-dev gh-pages"
+        echo ""
+        echo "2. Add these scripts to your package.json:"
+        echo '   {'
+        echo '     "scripts": {'
+        echo '       "predeploy": "npm run build",'
+        echo '       "deploy": "gh-pages -d dist"'
+        echo '     }'
+        echo '   }'
+        echo ""
+        echo "3. Run deployment command:"
+        echo "   npm run deploy"
+        echo ""
+        echo "4. Configure GitHub Pages in your repository settings:"
+        echo "   Settings -> Pages -> Source: Deploy from a branch -> gh-pages"
+        echo "========================================="
