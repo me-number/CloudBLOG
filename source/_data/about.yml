@@ -1,6 +1,6 @@
 - class_name: 关于页
   subtitle: 分享网络安全与科技生活，あ布鸢尾绽放,一瓣心香,折刃不弃,纸质柔情✨
-  avatarImg: https://img01.anheyu.com/useruploads/198/2023/11/16/6555c6fb5f14d.png
+  avatarImg: /favicon.ico
   avatarSkills:
     left:
       - 🤖️ 数码科技爱好者
@@ -12,7 +12,7 @@
       - 脚踏实地行动派 🏃
       - 团队小组发动机 🧱
       - 壮汉人狠话不多 💢
-  name: 孤影
+  name: 张文涛
   description: 是一名 前端工程师、独立开发者、博主
   aboutsiteTips:
     tips: 追求
@@ -103,7 +103,7 @@
     music_bg: https://p2.music.126.net/Mrg1i7DwcwjWBvQPIMt_Mg==/79164837213438.jpg
     music_link: /music
   reward_list:
-    - name: 孤影
+    - name: 张文涛
       amount: 125
       datatime: 2023-11-19
       suffix: 贝壳
