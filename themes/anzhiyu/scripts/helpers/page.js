@@ -103,7 +103,7 @@ hexo.extend.helper.register("cloudTags", function (options = {}) {
 });
 
 hexo.extend.helper.register("urlNoIndex", function (url = null) {
-  return prettyUrls(url || this.url, { trailing_index: false, trailing_html: false });
+  return prettyUrls(url || this.url, { trailing_index: false, trailing_html: true });
 });
 
 hexo.extend.helper.register("md5", function (path) {
@@ -142,15 +142,6 @@ hexo.extend.helper.register("findArchivesTitle", function (page, menu, date) {
 
   return loop(menu) || defaultTitle;
 });
-
-hexo.extend.helper.register('toStar', function(num) {
-  let tmp = ''
-  for (let i = 0; i < Math.floor(num); i++) { tmp += '<i class="iconfont icat-star"></i>' } // 整数部分加 实心星星
-  if (num - Math.floor(num) != 0) tmp += '<i class="iconfont icat-star-half"></i>' // 小数部分转成 半星
-  for (let i = 0; i < 5 - Math.ceil(num); i++) { tmp += '<i class="iconfont icat-star-empty"></i>' } // 不够5个补 空心星星
-  return tmp
-})
-// 足迹藏宝阁星星
 
 hexo.extend.helper.register('isImgOrUrl', function (path) {
   const imgTestReg = /\.(png|jpe?g|gif|svg|webp)(\?.*)?$/i
