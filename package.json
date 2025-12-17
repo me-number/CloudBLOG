@@ -15,7 +15,7 @@
     "add": "^2.0.6",
     "cheerio": "^1.1.2",
     "gulp": "^5.0.1",
-    "hexo": "^6.3.0",
+    "hexo": "^8.1.1",
     "hexo-abbrlink": "^2.2.1",
     "hexo-bilibili-bangumi-anzhiyu": "^1.8.2",
     "hexo-blog-encrypt": "^3.1.9",
