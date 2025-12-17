@@ -1,4 +1,7 @@
-name: OpenList Production Deployment
+name: Frontend and Backend Deployment to Cloudflare Workers
+
+# This workflow automates the build and deployment process
+# It runs on pushes to main branch and pull requests to main branch
 
 on:
   push:
@@ -6,188 +9,108 @@ on:
   pull_request:
     branches: [ main, master ]
 
+# Environment variables for Cloudflare authentication
 env:
   CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
   CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
 
 jobs:
-  test:
+  # Job to build and test the application
+  build-and-test:
     runs-on: ubuntu-latest
     
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
+      # Step 1: Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '18'
-        cache: 'npm'
+      # Step 2: Setup Node.js environment
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          # Using Node.js 18 as recommended in the requirements
+          node-version: '18'
+          # Enable caching for faster builds
+          cache: 'npm'
 
-    - name: Install dependencies
-      run: |
-        npm install
-        cd pages
-        npm install
-        cd ..
+      # Step 3: Install dependencies using npm ci for clean installation
+      - name: Install dependencies
+        run: npm ci
 
-    - name: Run tests
-      run: |
-        npm test
-        cd pages
-        npm test || echo "No tests found in pages directory"
-        cd ..
+      # Step 4: Execute build script to compile frontend project
+      - name: Build frontend project
+        run: npm run build
+        # This will create output in the public directory as specified
 
-  setup-production:
-    needs: test
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
-    
-    outputs:
-      kv_namespace_id: ${{ steps.create_kv.outputs.namespace_id }}
-      d1_database_id: ${{ steps.create_d1.outputs.database_id }}
-    
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
+      # Step 5: Run tests to ensure code quality before deployment
+      - name: Run tests
+        run: npm test
+        # If tests fail, the workflow will stop and not proceed to deployment
 
-    - name: Setup Wrangler
-      uses: cloudflare/wrangler-action@v3
-      with:
-        apiToken: ${{ secrets.CF_API_TOKEN }}
-        accountId: ${{ secrets.CF_ACCOUNT_ID }}
-        command: --version
-
-    - name: Create KV namespace
-      id: create_kv
-      run: |
-        NAMESPACE_ID=$(npx wrangler kv:namespace create "KV_DATA" | grep -oE "[a-f0-9]{32}")
-        echo "namespace_id=$NAMESPACE_ID" >> $GITHUB_OUTPUT
-        echo "Created KV namespace with ID: $NAMESPACE_ID"
-      env:
-        CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
-        CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
-
-    - name: Create D1 database
-      id: create_d1
-      run: |
-        DATABASE_INFO=$(npx wrangler d1 create openlist-prod-db)
-        DATABASE_ID=$(echo "$DATABASE_INFO" | grep -oE "[a-f0-9-]{36}")
-        echo "database_id=$DATABASE_ID" >> $GITHUB_OUTPUT
-        echo "Created D1 database with ID: $DATABASE_ID"
-      env:
-        CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
-        CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
-
-    - name: Execute database schema
-      run: |
-        npx wrangler d1 execute openlist-prod-db --file=./schema.sql
-      env:
-        CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
-        CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
-
-    - name: Update wrangler configuration
-      run: |
-        # Create a temporary wrangler config with production IDs
-        cat > wrangler.prod.jsonc << EOF
-        {
-          "name": "openlist-back-work",
-          "main": "src/index.ts",
-          "compatibility_date": "2025-08-16",
-          "compatibility_flags": ["nodejs_compat"],
-          "vars": {
-            "ENABLE_D1": true,
-            "REMOTE_D1": ""
-          },
-          "kv_namespaces": [{
-            "binding": "KV_DATA",
-            "id": "${{ steps.create_kv.outputs.namespace_id }}"
-          }],
-          "d1_databases": [{
-            "binding": "D1_DATA",
-            "database_name": "openlist-prod-db",
-            "database_id": "${{ steps.create_d1.outputs.database_id }}"
-          }]
-        }
-        EOF
-      env:
-        CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
-        CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
-
+  # Job to deploy the application to Cloudflare Workers
   deploy:
-    needs: [test, setup-production]
+    # Wait for build-and-test job to complete successfully
+    needs: build-and-test
     runs-on: ubuntu-latest
+    # Only run on main branch pushes (not pull requests)
     if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
     
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
+      # Step 1: Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '18'
-        cache: 'npm'
+      # Step 2: Setup Node.js environment
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
 
-    - name: Install dependencies
-      run: |
-        npm install
-        cd pages
-        npm install
-        cd ..
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: npm ci
 
-    - name: Build frontend project
-      run: |
-        cd pages
-        npm run build
-        cd ..
+      # Step 4: Build the frontend project to public directory
+      - name: Build frontend project to public directory
+        run: npm run build
+        # Ensures the public directory contains the latest build
 
-    - name: Copy frontend build to public directory
-      run: |
-        mkdir -p public
-        cp -r pages/dist/* public/
+      # Step 5: Setup Wrangler CLI for Cloudflare deployment
+      - name: Setup Wrangler
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          accountId: ${{ secrets.CF_ACCOUNT_ID }}
+          command: --version
 
-    - name: Setup Wrangler
-      uses: cloudflare/wrangler-action@v3
-      with:
-        apiToken: ${{ secrets.CF_API_TOKEN }}
-        accountId: ${{ secrets.CF_ACCOUNT_ID }}
-        command: --version
+      # Step 6: Deploy both frontend and backend to Cloudflare Workers
+      - name: Deploy to Cloudflare Workers
+        run: npm run deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+        # This command handles deployment of both frontend and backend
 
-    - name: Deploy backend to Cloudflare Workers
-      run: |
-        # Use the production configuration
-        cp wrangler.prod.jsonc wrangler.jsonc
-        npx wrangler deploy
-      env:
-        CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
-        CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
-
-    - name: Deploy frontend to Cloudflare Workers
-      run: |
-        # Deploy the frontend as static assets
-        npx wrangler pages deploy public --project-name=openlist-frontend
-      env:
-        CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
-        CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
-
+  # Notification job that runs regardless of previous job success/failure
   notify:
-    needs: [test, setup-production, deploy]
+    needs: [build-and-test, deploy]
     runs-on: ubuntu-latest
-    if: always()
+    if: always()  # Always run this step to provide notification
     
     steps:
-    - name: Check deployment status
-      run: |
-        echo "Test result: ${{ needs.test.result }}"
-        echo "Setup production result: ${{ needs.setup-production.result }}"
-        echo "Deploy result: ${{ needs.deploy.result }}"
-        
-        if [[ "${{ needs.test.result }}" == "success" && 
-              ("${{ needs.setup-production.result }}" == "success" || "${{ needs.setup-production.result }}" == "skipped") && 
-              ("${{ needs.deploy.result }}" == "success" || "${{ needs.deploy.result }}" == "skipped") ]]; then
-          echo "All jobs completed successfully!"
-        else
-          echo "Some jobs failed!"
-          exit 1
-        fi
+      # Check overall workflow status
+      - name: Check workflow status
+        run: |
+          BUILD_STATUS="${{ needs.build-and-test.result }}"
+          DEPLOY_STATUS="${{ needs.deploy.result }}"
+          
+          echo "Build and Test Status: $BUILD_STATUS"
+          echo "Deploy Status: $DEPLOY_STATUS"
+          
+          if [[ "$BUILD_STATUS" == "success" && ("$DEPLOY_STATUS" == "success" || "$DEPLOY_STATUS" == "skipped") ]]; then
+            echo "Workflow completed successfully!"
+          else
+            echo "Workflow encountered issues."
+            exit 1
+          fi
