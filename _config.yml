@@ -135,6 +135,7 @@ feed:
   content_limit_delim: '' # 如果content设置为false，摘要的分割符
   order_by: -date # 按日期倒序排列
   autodiscovery: true # 自动在页面<head>中添加feed链接，必选true
+  pretty_atom_file: /atom.xsl
 
 search:
   path: search.xml
