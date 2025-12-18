@@ -1,5 +1,5 @@
 ---
-title:
+title:唐朝诡事录
 date:
 type:
 comment:
@@ -10,3 +10,4 @@ katex:
 reprint:
 locate:
 ---
+唐朝诡事录
