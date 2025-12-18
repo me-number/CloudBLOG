@@ -128,11 +128,11 @@ sitemap:
 # see：https://github.com/willow-god/hexo-pretty-feed
 feed:
   enable: true
-  content: false
-  content_limit: 40
+  content: true
+  content_limit: 0
   type: atom
   path: atom.xml
-  limit: 25
+  limit: 0
   pretty_atom_file: /atom.xsl
   
 
