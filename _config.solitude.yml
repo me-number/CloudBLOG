@@ -35,6 +35,7 @@ nav:
       我的装备: /kit/ || fas fa-cogs
       关于本站: /about/ || fas fa-user
       音乐馆: /music/ || fas fa-music
+      站点状态: https://uptime-status.zhang-wentao.cn/ || fas fa-cogs
 
   # Right button
   # 右侧按钮
