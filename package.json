@@ -43,6 +43,9 @@
     "hexo-util": "^4.0.0",
     "hexo-wordcount": "^6.0.1",
     "katex": "^0.16.22",
+    "hexo-swpp": "^4.0-alpha",
+    "swpp-backends": "^3.0.0-alpha",
+    "hexo-algoliasearch": "^2.0.1", 
     "moment": "^2.30.1"
   },
   "packageManager": "pnpm@10.12.4"

@@ -135,7 +135,16 @@ feed:
   limit: 0
   pretty_atom_file: /atom.xsl
   
+swpp:
+  # 是否启用插件
+  enable: true
+  # 是否在发布前自动执行脚本
+  # auto_exec: true
 
+
+plugins:
+    - "@renbaoshuo/markdown-it-katex"
+    - hexo-algoliasearch
 
 search:
   path: search.xml
@@ -155,8 +164,6 @@ markdown:
     quotes: "“”‘’"
   enable_rules:
   disable_rules:
-  plugins:
-    - "@renbaoshuo/markdown-it-katex"
   anchors:
     level: 2
     collisionSuffix: ""
@@ -171,3 +178,20 @@ markdown:
     prepend_root: false
     post_asset: false
   inline: false # https://markdown-it.github.io/markdown-it/#MarkdownIt.renderInline
+
+
+algolia:
+  appId: "IRUV5PUMBL"
+  apiKey: "913f8a6ad57b981a9cbc3f75ff6af892"
+  adminApiKey: "40321c7c207e7f73b63a19aa24c4761b"
+  chunkSize: 5000
+  indexName: "my-hexo-blog"
+  fields:
+    - content:strip:truncate,0,500
+    - excerpt:strip
+    - gallery
+    - permalink
+    - photos
+    - slug
+    - tags
+    - title
