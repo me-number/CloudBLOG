@@ -43,8 +43,6 @@
     "hexo-util": "^4.0.0",
     "hexo-wordcount": "^6.0.1",
     "katex": "^0.16.22",
-    "hexo-swpp": "^3.3",
-    "swpp-backends": "^2.1.2",
     "hexo-generator-search": "^2.4.3",
     "hexo-algoliasearch": "^2.0.1", 
     "moment": "^2.30.1"
