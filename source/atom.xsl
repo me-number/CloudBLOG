@@ -21,7 +21,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <title>
           <xsl:value-of select="$title"/>
- - 清羽飞扬の订阅源</title>
+ - 订阅源</title>
         <style>
           :root {
             --bg-color: #f8fafc;
@@ -262,7 +262,7 @@
             </div>
 
             <p class="header-description-cn">
-    清羽飞扬的技术博客，提供建站教程、编程实战笔记、生活点滴，个人经验，融合技术开发与人文思考，定期更新深度指南与创意灵感，给大家提供更多帮助。
+    技术博客，提供建站教程、编程实战笔记、生活点滴，个人经验，融合技术开发与人文思考，定期更新深度指南与创意灵感，给大家提供更多帮助。
             </p>
             <p class="header-description-en">
     LiuShen’s Tech Blog, Sharing tutorials, coding notes, life moments, personal experiences, blending tech and humanities, with regularly updated guides and creative inspiration.
@@ -331,7 +331,7 @@
               <a href="https://www.liushen.fun/" target="_blank" rel="nofollow noopener noreferrer">LiuShen</a>
             </div>
             <div class="footer-line">
-              <a href="https://blog.liushen.fun/" target="_blank" rel="nofollow noopener noreferrer">清羽飞扬</a>
+              <a href="https://zhang-wentao.cn/" target="_blank" rel="nofollow noopener noreferrer">张文涛</a>
               <span>|</span>
               <a href="https://bing.liushen.fun/" target="_blank" rel="nofollow noopener noreferrer">Bing每日一图</a>
             </div>
