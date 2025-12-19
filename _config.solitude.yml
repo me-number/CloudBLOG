@@ -6,7 +6,7 @@
 site:
   name:
     class: text # text / i_class / img
-    custom: Solitude # Solitude / fas fa-ghost / /img/pwa/favicon.ico
+    custom: CloudBLOG # Solitude / fas fa-ghost / /img/pwa/favicon.ico
   icon: /img/logo.png # Site icon / 网站图标
 # --------------------------- end ---------------------------
 
