@@ -168,18 +168,8 @@ markdown:
   inline: false # https://markdown-it.github.io/markdown-it/#MarkdownIt.renderInline
 
 
-algolia:
-  appId: "IRUV5PUMBL"
-  apiKey: "913f8a6ad57b981a9cbc3f75ff6af892"
-  adminApiKey: "40321c7c207e7f73b63a19aa24c4761b"
-  chunkSize: 5000
-  indexName: "my-hexo-blog"
-  fields:
-    - content:strip:truncate,0,500
-    - excerpt:strip
-    - gallery
-    - permalink
-    - photos
-    - slug
-    - tags
-    - title
+search:
+  path: search.xml
+  field: post
+  content: true
+  template:
