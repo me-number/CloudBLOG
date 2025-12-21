@@ -45,8 +45,8 @@
     "katex": "^0.16.22",
     "hexo-generator-search": "^2.4.3",
     "hexo-algoliasearch": "^2.0.1", 
-    "hexo-swpp": "^1.0.3",
-    "swpp-backends": "^1.0.3",
+    "hexo-swpp": "^4.0.0-alpha.131",
+    "swpp-backends": "^3.0.0-alpha.908",
     "moment": "^2.30.1"
   },
   "packageManager": "pnpm@10.12.4"
