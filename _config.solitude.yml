@@ -726,7 +726,7 @@ extends:
   # 插入到 head
   head:
     - <link rel="stylesheet" href="https://everfu.github.io/solitude-demo/css/schedule.css">
-    - <script src="/css/uptime-status.css"></script>
+    - <link rel="stylesheet" href="/css/uptime-status.css">
   #  - <script src="https://cdn.bootcdn.net/ajax/libs/pace/1.2.4/pace.min.js"></script>
 
   # Insert in body
