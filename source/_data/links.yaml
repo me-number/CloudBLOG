@@ -12,3 +12,10 @@ links:
         topimg: https://s3.qjqq.cn/47/674c6c6783097.png!color # 如果是card模式下，将显示
         tag: 博主
         color: vip
+      - name: 挽着红月缓缓走的个人博客 # 友链名称
+        link: https://blog.rinai.top # 友链地址
+        descr: 一个狂热的开源工作者 # 友链简介
+        avatar: https://tutu.rinai.top/11.png # 显示头像
+        topimg: https://tutu.rinai.top/11.png # 如果是card模式下，将显示
+        tag: 博主
+        color: vip
