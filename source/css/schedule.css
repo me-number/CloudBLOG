@@ -1,11 +1,3 @@
-/* 引入HarmonyOS Sans SC字体 */
-@import url('https://cdn.xrbk.cn/fonts/HarmonyOS_Sans_SC/result.css');
-/* 确保所有文本元素都使用HarmonyOS字体 */
-body{
-  font-family: "HarmonyOS Sans SC" !important;
-}
-
-
 .card-widget {
   max-height: calc(100vh - 100px);
   position: relative;
