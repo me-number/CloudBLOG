@@ -31,59 +31,50 @@ const sidebarFn = () => {
 };
 
 (function() {
-  // 1. 禁用键盘 Ctrl + +/-/0 缩放
+  /** 
+   * 1. 修复 ko.runtime.connect 报错 (针对插件冲突)
+   * 在插件尝试调用该函数前，先定义一个空的占位符
+   */
+  if (typeof window.ko === 'undefined') {
+    window.ko = { 
+      runtime: { 
+        connect: function() { 
+          return { onMessage: { addListener: function() {} }, disconnect: function() {} }; 
+        } 
+      } 
+    };
+  }
+
+  /**
+   * 2. 禁用 Windows 键盘 & 鼠标滚轮缩放
+   */
   document.addEventListener('keydown', function (event) {
-    if (
-      event.ctrlKey === true && 
-      (event.keyCode === 61 ||   // Firefox 的 +
-       event.keyCode === 107 ||  // 数字键盘的 +
-       event.keyCode === 173 ||  // Firefox 的 -
-       event.keyCode === 109 ||  // 数字键盘的 -
-       event.keyCode === 187 ||  // 标准键盘的 =/+
-       event.keyCode === 189 ||  // 标准键盘的 -/_
-       event.keyCode === 48)     // Ctrl + 0 (重置缩放)
-    ) {
+    if (event.ctrlKey === true && 
+       (event.keyCode === 61 || event.keyCode === 107 || event.keyCode === 173 || 
+        event.keyCode === 109 || event.keyCode === 187 || event.keyCode === 189 || 
+        event.keyCode === 48)) {
       event.preventDefault();
     }
   }, false);
 
-  // 2. 禁用鼠标滚轮 Ctrl + Wheel 缩放
   document.addEventListener('wheel', function (event) {
     if (event.ctrlKey === true) {
       event.preventDefault();
     }
   }, { passive: false });
 
-  // 3. 针对部分触屏 Windows 设备，禁用双指缩放
+  /**
+   * 3. 禁用 iOS/移动端 双指缩放
+   */
   document.addEventListener('touchstart', function(event) {
     if (event.touches.length > 1) {
       event.preventDefault();
     }
   }, { passive: false });
-})();
 
-(function() {
-  // 1. 阻止双指缩放 (Pinch Zoom)
-  document.addEventListener('touchstart', function(event) {
-    if (event.touches.length > 1) {
-      event.preventDefault(); // 当检测到多于一根手指时，禁止默认缩放
-    }
-  }, { passive: false });
-
-  // 2. 阻止 iOS 特有的手势缩放 (Gesture Zoom)
   document.addEventListener('gesturestart', function(event) {
-    event.preventDefault(); // 直接禁止手势缩放开始
+    event.preventDefault();
   });
-
-  // 3. 辅助：禁止双击缩放
-  var lastTouchEnd = 0;
-  document.addEventListener('touchend', function(event) {
-    var now = (new Date()).getTime();
-    if (now - lastTouchEnd <= 300) {
-      event.preventDefault(); // 两次点击间隔小于300ms则视为双击，予以禁止
-    }
-    lastTouchEnd = now;
-  }, false);
 })();
 
 const scrollFn = () => {
