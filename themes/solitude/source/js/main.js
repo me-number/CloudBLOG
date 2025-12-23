@@ -31,6 +31,38 @@ const sidebarFn = () => {
 };
 
 (function() {
+  // 1. 禁用键盘 Ctrl + +/-/0 缩放
+  document.addEventListener('keydown', function (event) {
+    if (
+      event.ctrlKey === true && 
+      (event.keyCode === 61 ||   // Firefox 的 +
+       event.keyCode === 107 ||  // 数字键盘的 +
+       event.keyCode === 173 ||  // Firefox 的 -
+       event.keyCode === 109 ||  // 数字键盘的 -
+       event.keyCode === 187 ||  // 标准键盘的 =/+
+       event.keyCode === 189 ||  // 标准键盘的 -/_
+       event.keyCode === 48)     // Ctrl + 0 (重置缩放)
+    ) {
+      event.preventDefault();
+    }
+  }, false);
+
+  // 2. 禁用鼠标滚轮 Ctrl + Wheel 缩放
+  document.addEventListener('wheel', function (event) {
+    if (event.ctrlKey === true) {
+      event.preventDefault();
+    }
+  }, { passive: false });
+
+  // 3. 针对部分触屏 Windows 设备，禁用双指缩放
+  document.addEventListener('touchstart', function(event) {
+    if (event.touches.length > 1) {
+      event.preventDefault();
+    }
+  }, { passive: false });
+})();
+
+(function() {
   // 1. 阻止双指缩放 (Pinch Zoom)
   document.addEventListener('touchstart', function(event) {
     if (event.touches.length > 1) {
