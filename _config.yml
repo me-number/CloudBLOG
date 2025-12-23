@@ -199,3 +199,8 @@ bangumi: # 追番设置
     top_img: false
     lazyload:
       enable: false
+
+
+card_announcement:
+  enable: true
+  content: <div id="welcome-info"></div>
