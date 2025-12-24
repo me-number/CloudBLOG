@@ -27,15 +27,6 @@ social:
 # Example of adding a new link to the footer - {icon: "ion-logo-dribbble", link: "https://dribbble.com"}
 # Other icons can be found at https://ionicons.com/v4/
 
-
-#-------------------------------
-# Hero Settings
-hero:
-  hero__title: Welcome! I’m Meredith Cook.
-  hero__description: I'm a stay-at-home mom moonlighting as a writer of grants and children's books.
-  hero__image: 'images/headshotvintage.png'
-
-
 #-------------------------------
 # Newsletter
 mailchimp:  # To enable the mailchimp form, use the value 'enable'. To disable the form, leave the field blank.
