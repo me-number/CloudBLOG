@@ -6,5 +6,6 @@ gem "jekyll-paginate"
 gem "jekyll-sitemap"
 
 group :jekyll_plugins do
-  gem 'jekyll-pwa-plugin'
+  gem "jekyll-pwa-plugin"
+  gem "jekyll-timeago"
 end
