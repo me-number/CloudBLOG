@@ -1,9 +1,3 @@
-/* 1. 必须位于首行：引入变量模块 */
-@use "../0-settings/variables" as *;
-
-/* 2. 保底机制：定义该文件特有的或可能缺失的变量 */
-$global-transition: all 0.25s ease !default;
-
 /* Header */
 .header {
   .header__inner {

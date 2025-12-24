@@ -9,10 +9,10 @@
 }
 
 // Reset list
-@mixin list-reset {
+@mixin list-reset() {
+  list-style-type: none;
   margin: 0;
   padding: 0;
-  list-style: none;
 }
 
 // Screen reader text

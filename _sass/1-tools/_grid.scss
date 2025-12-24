@@ -1,16 +1,7 @@
-// 1-tools/_grid.scss
-
-/**
- * 1. 必须在文件最顶部引入变量定义
- * 使用 as * 可以让你直接使用 $base-spacing-unit 变量
- * 请根据你的实际目录结构调整路径，通常是 ../0-settings/variables
- */
-@use "../0-settings/variables" as *;
-
 /* Grid */
 $columns: 12;
 $container-base-width: 1140px;
-$container-offset: $base-spacing-unit; // 现在可以正确识别了
+$container-offset: $base-spacing-unit;
 
 $desktop: 1024px;
 $tablet:  768px;
@@ -49,7 +40,6 @@ $mq: ( $mobile:$columns, $tablet:$columns, $desktop:$columns );
   flex: 0 1 auto;
   flex-direction: row;
   box-sizing: border-box;
-  // 修正计算语法
   margin-left: ($base-spacing-unit * -1);
   margin-right: ($base-spacing-unit * -1);
 }
@@ -63,7 +53,6 @@ $mq: ( $mobile:$columns, $tablet:$columns, $desktop:$columns );
   flex: auto;
 }
 
-// 基础列
 @for $i from 0 through $columns {
   .col-#{$i} {
     width: calc( #{$i} / #{$columns} * 100% );
@@ -82,21 +71,24 @@ $mq: ( $mobile:$columns, $tablet:$columns, $desktop:$columns );
   }
 }
 
-// 响应式断点循环
+
 @each $key, $val in $mq {
 
   // DESKTOP
   @media(max-width: $desktop) {
+
     @for $i from 0 through $columns {
       .col-d-#{$i} {
         width: calc( #{$i} / #{$columns} * 100% );
       }
     }
+
     @for $i from 0 through $columns {
       .push-d-#{$i} {
         margin-left: calc( #{$i} / #{$columns} * 100% );
       }
     }
+
     @for $i from 0 through $columns {
       .pull-d-#{$i} {
         margin-right: calc( #{$i} / #{$columns} * 100% );
@@ -104,18 +96,22 @@ $mq: ( $mobile:$columns, $tablet:$columns, $desktop:$columns );
     }
   }
 
+
   // TABLET
   @media(max-width: $tablet) {
+
     @for $i from 0 through $columns {
       .col-t-#{$i} {
         width: calc( #{$i} / #{$columns} * 100% );
       }
     }
+
     @for $i from 0 through $columns {
       .push-t-#{$i} {
         margin-left: calc( #{$i} / #{$columns} * 100% );
       }
     }
+
     @for $i from 0 through $columns {
       .pull-t-#{$i} {
         margin-right: calc( #{$i} / #{$columns} * 100% );
@@ -125,20 +121,24 @@ $mq: ( $mobile:$columns, $tablet:$columns, $desktop:$columns );
 
   // MOBILE
   @media(max-width: $mobile) {
+
     @for $i from 0 through $columns {
       .col-m-#{$i} {
         width: calc( #{$i} / #{$columns} * 100% );
       }
     }
+
     @for $i from 0 through $columns {
       .push-m-#{$i} {
         margin-left: calc( #{$i} / #{$columns} * 100% );
       }
     }
+
     @for $i from 0 through $columns {
       .pull-m-#{$i} {
         margin-right: calc( #{$i} / #{$columns} * 100% );
       }
     }
   }
+
 }

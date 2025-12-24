@@ -1,6 +1,3 @@
-/* 1. 必须位于首行：引入变量模块以修复 $mobile, $tablet, $base-spacing-unit 等报错 */
-@use "../0-settings/variables" as *;
-
 /* Pagination */
 .pagination {
   margin-bottom: 80px;
@@ -25,10 +22,9 @@
   font-weight: 700;
   line-height: 1;
   color: var(--text-color);
-  list-style: none; /* 2025年标准：显式清除列表样式 */
-  padding: 0;
 
   @media only screen and (max-width: $mobile) {
+    align-items: stretch;
     font-size: 16px;
   }
 }
@@ -37,33 +33,23 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  flex: 1; /* 2025年优化：使用 flex 均分空间 */
+  width: 100%;
   padding: 24px 20px;
   text-align: center;
   border-radius: 8px;
   background: var(--background-alt-color);
-  transition: background-color 0.25s ease, color 0.25s ease;
-  color: var(--heading-font-color);
-  text-decoration: none;
-
-  &:hover:not(.disabled) {
-    background: var(--brand-color);
-    color: var(--white);
-    
-    i { color: var(--white); }
-  }
 
   @media only screen and (max-width: $mobile) {
-    padding: 16px; /* 移动端减小内边距 */
+    align-items: center;
+    padding: 20px;
+    border-radius: 8px;
   }
 }
 
 .pagination__count {
   margin: 0 32px;
   font-size: 16px;
-  font-weight: 500;
   color: var(--link-color);
-  white-space: nowrap; /* 防止页码换行 */
 
   @media only screen and (max-width: $tablet) {
     margin: 0 12px;
@@ -78,46 +64,60 @@
 
 .pagination__next,
 .pagination__prev {
-  cursor: pointer;
+  &:hover {
+    color: var(--heading-font-color);
+  }
 
   i {
     font-size: 15px;
-    transition: transform .2s ease;
+    transition: transform .15s ease;
     will-change: transform;
-    vertical-align: middle;
   }
 
   &.disabled {
-    opacity: 0.4; /* 2025年标准：降低禁用状态透明度以提升区分度 */
+    opacity: 0.64;
     cursor: not-allowed;
-    pointer-events: none; /* 彻底禁用点击事件 */
+    color: inherit;
     
-    &:hover i {
-      transform: none;
+    &:hover {
+      i {
+        transform: none;
+      }
     }
   }
 }
 
-/* 独立控制动画方向 */
-.pagination__next:hover:not(.disabled) i {
-  transform: translateX(4px);
-}
-
-.pagination__prev:hover:not(.disabled) i {
-  transform: translateX(-4px);
-}
-
-.pagination__next i { margin-left: 6px; }
-.pagination__prev i { margin-right: 6px; }
-
-/* 暗黑模式微调 */
 .dark-mode {
-  .pagination__item {
-    background: var(--background-alt-color);
+
+  .pagination__next,
+  .pagination__prev {
+
+    &.disabled {
+      opacity: 0.78;
+    }
   }
-  
-  .pagination__next.disabled,
-  .pagination__prev.disabled {
-    opacity: 0.3;
+}
+
+.pagination__next {
+  &:hover {
+    i {
+      transform: translateX(2px);
+    }
+  }
+
+  i {
+    margin-left: 5px;
+  }
+}
+
+.pagination__prev {
+  &:hover {
+    i {
+      transform: translateX(-2px);
+    }
+  }
+
+  i {
+    margin-right: 5px;
   }
 }
