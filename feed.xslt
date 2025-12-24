@@ -280,39 +280,50 @@
             </div>
           </header>
 
-          <div class="article-list">
-            <xsl:for-each select="/atom:feed/atom:entry">
-              <article class="article-card">
-                <h2 class="article-title">
-                  <a href="{atom:link/@href}" target="_blank">
-                    <xsl:value-of select="atom:title" disable-output-escaping="yes"/>
-                  </a>
-                </h2>
-                <div class="article-meta">
-                  <time>
+      <div class="article-list">
+        <!-- 注意：Jekyll-feed 的根节点通常是 /atom:feed -->
+        <xsl:for-each select="/atom:feed/atom:entry">
+          <article class="article-card">
+            <h2 class="article-title">
+              <!-- 修复：Jekyll 的链接通常在 href 属性中 -->
+              <a href="{atom:link[@rel='alternate']/@href}" target="_blank">
+                <xsl:value-of select="atom:title" disable-output-escaping="yes"/>
+              </a>
+            </h2>
+            <div class="article-meta">
+              <time>
+                <!-- 适配：Jekyll 默认使用 atom:published 或 atom:updated -->
+                <xsl:choose>
+                  <xsl:when test="atom:published">
                     <xsl:value-of select="substring(atom:published, 1, 10)"/>
-                  </time>
-                  <span>·</span>
-                  <span>
-                    <xsl:value-of select="atom:category/@term"/>
+                  </xsl:when>
+                  <xsl:otherwise>
+                    <xsl:value-of select="substring(atom:updated, 1, 10)"/>
+                  </xsl:otherwise>
+                </xsl:choose>
+              </time>
+              <span> · </span>
+              <span>
+                <!-- 获取第一个分类 -->
+                <xsl:value-of select="atom:category[1]/@term"/>
+              </span>
+            </div>
+            <p class="article-summary">
+              <xsl:value-of select="atom:summary" disable-output-escaping="yes"/>
+            </p>
+            
+            <xsl:if test="atom:category">
+              <div class="article-tags">
+                <xsl:for-each select="atom:category">
+                  <span class="tag">
+                    <xsl:value-of select="@term"/>
                   </span>
-                </div>
-                <p class="article-summary">
-                  <xsl:value-of select="atom:summary" disable-output-escaping="yes"/>
-                </p>
-                <xsl:if test="atom:category">
-                  <div class="article-tags">
-                    <xsl:for-each select="atom:category">
-                      <span class="tag">
-                        <xsl:value-of select="@term"/>
-                      </span>
-                    </xsl:for-each>
-                  </div>
-                </xsl:if>
-              </article>
-            </xsl:for-each>
-          </div>
-
+                </xsl:for-each>
+              </div>
+            </xsl:if>
+          </article>
+        </xsl:for-each>
+        
           <footer class="footer">
             <div class="footer-line">
               <a href="https://www.dogecloud.com/" target="_blank" rel="nofollow noopener noreferrer">多吉云</a>
