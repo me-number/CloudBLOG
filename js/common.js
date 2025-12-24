@@ -96,36 +96,33 @@ document.addEventListener("DOMContentLoaded", function() {
   ======================= */
   reframe(".post__content iframe:not(.reframe-off), .page__content iframe:not(.reframe-off)");
 
-/* =======================
-  // 修正全屏空白后的 JS
+  /* =======================
+  // LazyLoad Images
   ======================= */
-document.addEventListener("DOMContentLoaded", function() {
-  const baseSelector = ".post-image img, .page__content img, .post__content img, .gallery__image img";
+  var lazyLoadInstance = new LazyLoad({
+    elements_selector: ".lazy"
+  })
 
-  function applyLightense() {
-    // 检查 Lightense 是否存在
-    if (typeof Lightense === "function") {
-      Lightense(`${baseSelector}:not(.no-lightense)`, {
-        padding: 40,   // 稍微减少边距
-        offset: 10,    // 显著减少偏移，防止计算错误
-        duration: 300, // 缩短动画时间，防止动画卡死在空白状态
-        cubicBezier: 'cubic-bezier(.2, 0, .1, 1)'
-      });
-    }
+
+  /* =======================
+  // Zoom Image
+  ======================= */
+  const lightense = document.querySelector(".page__content img, .post__content img, .gallery__image img"),
+  imageLink = document.querySelectorAll(".page__content a img, .post__content a img, .gallery__image a img");
+
+  if (imageLink) {
+    for (var i = 0; i < imageLink.length; i++) imageLink[i].parentNode.classList.add("image-link");
+    for (var i = 0; i < imageLink.length; i++) imageLink[i].classList.add("no-lightense");
   }
 
-  // 监听图片加载，防止图片还没显示就初始化导致空白
-  const allImgs = document.querySelectorAll(baseSelector);
-  allImgs.forEach(img => {
-    if (img.complete) {
-      applyLightense();
-    } else {
-      img.addEventListener('load', applyLightense);
-    }
-  });
+  if (lightense) {
+    Lightense(".page__content img:not(.no-lightense), .post__content img:not(.no-lightense), .gallery__image img:not(.no-lightense)", {
+    padding: 60,
+    offset: 30
+    });
+  }
 
-  window.addEventListener("load", applyLightense);
-});
+
 
 
   /* =================================
