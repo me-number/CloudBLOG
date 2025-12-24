@@ -1,17 +1,17 @@
 #-------------------------------
 # Site Settings
-title: Meredith Cook
+title: Cloud BLOG
 logo: # You can add own logo. For example '/images/logo.png'.
 description: Personal website and blog.
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "https://zhang-wentao.tech/" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://zhang-wentao.tech" # the base hostname & protocol for your site, e.g. http://example.com
 color_scheme: auto # You can choose three modes auto, light, and dark. By default, the auto mode is set, which means the user can choose the light or dark mode themself.
 
 
 #-------------------------------
 # Author Settings
 author:
-  author__name: Meredith Cook
+  author__name: Zhang Wentao
   author__bio: Mom. Grant Writer. Author.
   author__avatar: 'images/headshotvintage.png'
 
@@ -114,3 +114,4 @@ include:
 sass:
   sass_dir: _sass
   style: compressed
+
