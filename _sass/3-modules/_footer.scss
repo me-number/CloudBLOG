@@ -100,28 +100,6 @@
   }
 }
 
-/* Footer Gallery */
-.footer__gallery {
-
-  .footer__gallery-title {
-    margin-bottom: 24px;
-    font-size: 28px;
-  }
-
-  .gallery__image {
-
-    img {
-      height: 100%;
-      border-radius: 8px;
-      overflow: hidden;
-  
-      &.lightense-open {
-        border-radius: 0;
-      }
-    }
-  }
-}
-
 /* Footer Info */
 .footer__info {
   padding: 44px 0;

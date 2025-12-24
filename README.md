@@ -26,7 +26,6 @@ Check the theme in action [Live Demo](https://menca.netlify.app/) |
 - Compatible with modern browsers
 - Medium style image zoom
 - Image Lazy loading
-- Image gallery
 - Tags Page
 - Custom logo support
 - Supports video posts

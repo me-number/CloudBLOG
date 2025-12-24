@@ -23,31 +23,6 @@ social:
 - {icon: "ion-md-book", link: "https://amzn.to/45wlDh1"}
 
 #-------------------------------
-# Gallery Footer Section
-gallery:
-  gallery__title: My Photos
-  gallery__columns: 3
-  gallery__images:
-    - alt: 'Torrey Pines'
-      url: '/images/torreypinesvintage.jpeg'
-    - alt: 'Big Bend National Park'
-      url: '/images/bigbendvintage.jpeg'
-    - alt: 'West Virginia'
-      url: '/images/westvirginiavintage.jpeg'
-    - alt: 'Tokyo'
-      url: '/images/tokyovintage.jpeg'
-    - alt: 'Grand Canyon'
-      url: '/images/grandcanyonvintage.jpeg'
-    - alt: 'Paris'
-      url: '/images/notredamevintage.jpeg'
-    - alt: 'Japan'
-      url: '/images/japanmountainvintage.jpeg'
-    - alt: 'India'
-      url: '/images/indiavintage.jpeg'
-    - alt: 'Istanbul'
-      url: '/images/istanbulvintage.jpeg'
-
-#-------------------------------
 # Contact Settings
 contact:
   email: meredithcook@proton.me # Add your email for contant form
