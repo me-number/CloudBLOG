@@ -17,11 +17,6 @@ contact:
 # Menca theme comes with a contact form built-in. You can use this form with Formspree (https://formspree.io/) service and get up to 50 submissions for free. Also, you can easily switch to another service if you want.
 
 #-------------------------------
-# Google Analytics
-google-analytics: # Add your GA Tracking Id
-
-
-#-------------------------------
 # Build Settings
 markdown: kramdown
 permalink: /:title
