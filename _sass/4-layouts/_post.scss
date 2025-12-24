@@ -15,23 +15,17 @@
     margin-bottom: 32px;
   }
 }
-
 .post-image,
 .page-image {
   position: relative;
-  /* 修改点 1：移除 transform: translate(0)，因为它会限制 Lightense 的弹出层级 */
-  transform: none; 
-  
-  /* 修改点 2：保持 16:9 比例 */
-  padding-top: 56.25%; 
-  min-height: 0; 
-  border-radius: 8px;
-
-  /* 修改点 3：重要！移除 overflow: hidden，否则放大后的图片会被容器切断 */
-  /* 如果你需要圆角，图片本身也需要加圆角，或者使用下方的优化方案 */
-  overflow: visible; 
-  
+  /* 必须为 none，否则放大层会被锁死在容器内 */
+  transform: none !important; 
+  padding-top: 56.25%; /* 16:9 比例 */
+  min-height: 0;
   background: var(--background-alt-color);
+  border-radius: 8px;
+  /* 必须为 visible，否则放大后的图片会被裁切 */
+  overflow: visible !important; 
 
   img {
     position: absolute;
@@ -40,30 +34,29 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    /* 修改点 4：确保用户可以点击，且不会被 Lightense 误判 */
     user-select: auto;
-    border: none; 
-    border-radius: 8px; /* 将圆角直接加在图片上，弥补容器取消 overflow:hidden 的影响 */
-    
-    /* 增加一个过渡，点击时更平滑 */
+    border: none;
+    border-radius: 8px; /* 保持圆角效果 */
     transition: opacity 0.3s ease;
+    z-index: 1;
   }
 
-  @media only screen and (max-width: $desktop) {
-    padding-top: 56.25%; 
+  @media only screen and (max-width: 1024px) {
+    padding-top: 56.25%;
     margin-bottom: 40px;
   }
 
-  @media only screen and (max-width: $mobile) {
+  @media only screen and (max-width: 768px) {
     margin-bottom: 32px;
   }
 }
 
-.page-image {
-  padding-top: 56.25%;
-  margin-bottom: 48px;
-  min-height: 0;
+/* 强制提升 Lightense 插件的层级，防止被导航栏遮挡 */
+.lightense-backdrop, 
+.lightense-wrap {
+  z-index: 99999 !important;
 }
+
 
 .post-video,
 .page-video {

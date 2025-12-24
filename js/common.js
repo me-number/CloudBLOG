@@ -103,28 +103,18 @@ document.addEventListener("DOMContentLoaded", function() {
   var lazyLoadInstance = new LazyLoad({
     elements_selector: ".lazy"
   })
-  
-/* =======================
-  // Zoom Image (整合优化版 - 2025)
-  ======================= */
-document.addEventListener("DOMContentLoaded", function() {
-  
+ document.addEventListener("DOMContentLoaded", function() {
   const baseSelector = ".post-image img, .page__content img, .post__content img, .gallery__image img";
   const linkSelector = ".post-image a img, .page__content a img, .post__content a img, .gallery__image a img";
 
-  // 1. 识别并排除带链接的图片
-  const imageLinks = document.querySelectorAll(linkSelector);
-  if (imageLinks.length > 0) {
-    imageLinks.forEach(img => {
-      img.parentNode.classList.add("image-link");
+  function applyLightense() {
+    // 排除链接图片
+    document.querySelectorAll(linkSelector).forEach(img => {
       img.classList.add("no-lightense");
     });
-  }
 
-  // 2. 基础初始化函数
-  function applyLightense() {
-    const lightenseElements = document.querySelector(baseSelector);
-    if (lightenseElements) {
+    // 初始化 Lightense
+    if (document.querySelector(baseSelector)) {
       Lightense(`${baseSelector}:not(.no-lightense)`, {
         padding: 60,
         offset: 30
@@ -132,15 +122,20 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   }
 
-  // 首次运行
+  // 1. 初次尝试
   applyLightense();
 
-  // 3. 针对懒加载和 post-image 的强化补丁
-  // 当页面所有资源（包括大图）加载完毕后再次触发
-  window.addEventListener("load", function() {
-    // 特别确保 .post-image 的图片被正确捕获
-    applyLightense(); 
-  });
+  // 2. 针对懒加载图片的特殊监听
+  const headImage = document.querySelector('.post-image img');
+  if (headImage) {
+    headImage.addEventListener('load', function() {
+      // 当图片真正加载完成（src替换成功）后，再次触发
+      applyLightense();
+    });
+  }
+
+  // 3. 兜底：window 加载完成
+  window.addEventListener("load", applyLightense);
 });
 
 
