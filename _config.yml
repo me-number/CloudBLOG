@@ -7,21 +7,6 @@ baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://zhang-wentao.tech" # the base hostname & protocol for your site, e.g. http://example.com
 color_scheme: auto # You can choose three modes auto, light, and dark. By default, the auto mode is set, which means the user can choose the light or dark mode themself.
 
-
-#-------------------------------
-# Author Settings
-author:
-  author__name: Zhang Wentao
-  author__bio: Mom. Grant Writer. Author.
-  author__avatar: 'images/headshotvintage.png'
-
-social:
-- {icon: "ion-md-mail", link: "mailto:meredithcook@proton.me"}
-- {icon: "ion-logo-twitter", link: "https://twitter.com/meredithcook716"}
-- {icon: "ion-logo-linkedin", link: "https://www.linkedin.com/in/meredithcook716/"}
-- {icon: "ion-logo-pinterest", link: "https://www.pinterest.com/meredithlcook/"}
-- {icon: "ion-md-book", link: "https://amzn.to/45wlDh1"}
-
 #-------------------------------
 # Contact Settings
 contact:
