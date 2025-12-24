@@ -1,31 +1,58 @@
+/* 1. 引入基础设置（可选） */
+@use "../0-settings/variables" as *;
+
 /* Animate */
 .animate {
-  animation: animateElement cubic-bezier(.300,.450,.450,.950) .75s;
-  animation-duration: 0.5s;
+  /* 优化 1：合并动画属性，移除冗余的 animation-duration */
+  /* 使用更平滑的 cubic-bezier 和更快的 0.5s 时间 */
+  animation: animateElement 0.5s cubic-bezier(.3, .45, .45, .95) forwards;
   animation-iteration-count: 1;
+  
+  /* 优化 2：为了流畅度，建议在 2025 年使用 translate3d 或 will-change */
+  will-change: transform;
   transition: transform .15s;
 
-  @keyframes animateElement {
-    0% {
-      transform:  translate(0px,50px);
-    }
-    100% {
-      transform:  translate(0px,0px);
-    }
+  /* 响应式优化：在移动端减少位移距离，防止页面跳动感过强 */
+  @media only screen and (max-width: 576px) {
+    animation-name: animateElementMobile;
   }
 }
 
-@keyframes pulse {
+/* 优化 3：将 @keyframes 移出类选择器（Dart Sass 推荐做法） */
+@keyframes animateElement {
   0% {
-    transform: scale(1, 1);
-  }
-  25% {
-    transform: scale(1, 1);
-  }
-  50% {
-    transform: scale(1.2, 1.2);
+    opacity: 0; // 增加透明度变化，让进入效果更丝滑
+    transform: translate(0, 50px);
   }
   100% {
-    transform: scale(1, 1);
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes animateElementMobile {
+  0% {
+    opacity: 0;
+    transform: translate(0, 30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+}
+
+/* 优化 4：Pulse 动画常用于视频图标或提醒按钮 */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.15); // 稍微减小幅度，1.2 有点过大
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
   }
 }

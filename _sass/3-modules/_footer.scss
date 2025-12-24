@@ -1,5 +1,9 @@
+/* 1. 必须位于首行：引入变量模块 */
+@use "../0-settings/variables" as *;
+
 /* Footer */
 .footer {
+  /* 确保变量 $mobile 已在 variables.scss 中定义，否则此处会报错 */
   margin-top: 48px;
   background-color: var(--background-alt-color);
 
@@ -15,9 +19,9 @@
     flex-grow: 1;
   }
 
-   @media only screen and (max-width: $mobile) {
-     padding: 60px 0;
-   }
+  @media only screen and (max-width: $mobile) {
+    padding: 60px 0;
+  }
 }
 
 /* Footer Info */
@@ -29,6 +33,12 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    
+    /* 2025年响应式优化：在手机端将版权和返回顶部按钮垂直排列 */
+    @media only screen and (max-width: $mobile) {
+      flex-direction: column-reverse;
+      gap: 24px;
+    }
   }
 
   @media only screen and (max-width: $desktop) {
@@ -42,10 +52,17 @@
   font-weight: 500;
   color: var(--text-alt-color);
 
+  @media only screen and (max-width: $mobile) {
+    margin-right: 0;
+    text-align: center;
+  }
+
   a {
     text-decoration: underline;
     text-decoration-color: transparent;
+    text-underline-offset: 4px; /* 增加下划线偏移，视觉更现代 */
     color: var(--heading-font-color);
+    transition: all .25s ease;
 
     &:hover {
       text-decoration-color: var(--heading-font-color);
@@ -55,14 +72,22 @@
 }
 
 .top {
-  min-width: 36px;
-  height: 36px;
+  /* 2025年点击区域优化：确保按钮易于在触摸屏上点击 */
+  min-width: 44px; /* 从36px提升到44px以符合无障碍标准 */
+  height: 44px;
   font-size: 20px;
-  line-height: 36px;
+  line-height: 44px;
   text-align: center;
   border-radius: 8px;
   color: var(--heading-font-color);
   background-color: var(--background-alt-color);
   cursor: pointer;
-  transition: all .25s ease;
+  transition: transform .25s ease, background-color .25s ease;
+  user-select: none;
+
+  &:hover {
+    transform: translateY(-4px); /* 增加悬停位移动效 */
+    background-color: var(--brand-color);
+    color: var(--white);
+  }
 }

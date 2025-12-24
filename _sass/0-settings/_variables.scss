@@ -3,35 +3,36 @@
 // *****************
 
 // Spaces
-$base-spacing-unit: 16px;
+// 使用 !default 允许在其他地方覆盖此变量而无需修改源码
+$base-spacing-unit: 16px !default;
 
 // Border radius
-$global-radius: 3px;
+$global-radius: 8px !default; // 2025年建议：从 3px 升级到 8px，更符合现代圆润设计
 
 // Transition
-$global-transition: all .35s;
+$global-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !default; // 优化动画曲线
 
 
 // *****************
 // Typography
 // *****************
-$base-font-size: 20px;
-$base-font-style: normal;
-$base-font-variant: normal;
-$base-font-weight: normal;
-$base-font-family: 'Jost', Helvetica Neue, Helvetica, Arial, sans-serif;
-$base-line-height: 1.5;
+$base-font-size: 20px !default;
+$base-font-style: normal !default;
+$base-font-variant: normal !default;
+$base-font-weight: 400 !default; // 修正：建议使用数值
+$base-font-family: 'Jost', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !default;
+$base-line-height: 1.6 !default; // 2025年标准：1.6 的行高更利于阅读
 
 // Headings
-$heading-font-weight: 700;
-$heading-font-family: 'Jost', Helvetica Neue, Helvetica, Arial, sans-serif;
+$heading-font-weight: 700 !default;
+$heading-font-family: $base-font-family !default;
 
-$font-size-h1:  36px;
-$font-size-h2:  28px;
-$font-size-h3:  24px;
-$font-size-h4:  20px;
-$font-size-h5:  18px;
-$font-size-h6:  16px;
+$font-size-h1:  46px !default; // 2025年建议：加大标题字号，增强视觉冲击力
+$font-size-h2:  36px !default;
+$font-size-h3:  28px !default;
+$font-size-h4:  24px !default;
+$font-size-h5:  20px !default;
+$font-size-h6:  18px !default;
 
-$heading-line-height: 1.3;
-$heading-letter-spacing: -1px;
+$heading-line-height: 1.2 !default;
+$heading-letter-spacing: -0.02em !default; // 修正：使用 em 单位比 px 更具响应性

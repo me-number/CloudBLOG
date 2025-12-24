@@ -1,3 +1,6 @@
+/* 1. 必须位于首行：引入变量模块以修复 $tablet, $mobile 等变量未定义的错误 */
+@use "../0-settings/variables" as *;
+
 /* Sections */
 .section__head {
   position: relative;
@@ -7,6 +10,7 @@
   flex-wrap: wrap;
   margin-bottom: 40px;
 
+  /* 背景装饰线 */
   &::after {
     content: "";
     position: absolute;
@@ -19,8 +23,13 @@
   }
 
   @media only screen and (max-width: $tablet) {
+    /* 2025年优化：在平板/手机端将标题和链接改为上下排列，并移除伪元素装饰线 */
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+
     &::after {
-      content: none;
+      display: none;
     }
   }
 }
@@ -29,6 +38,12 @@
   padding-right: 20px;
   margin-bottom: 0;
   font-size: 28px;
+  /* 确保标题背景遮盖装饰线 */
+  background: var(--background-color);
+
+  @media only screen and (max-width: $tablet) {
+    padding-right: 0;
+  }
 
   @media only screen and (max-width: $mobile) {
     font-size: 24px;
@@ -38,15 +53,18 @@
 .section__link {
   padding-left: 20px;
   font-size: 18px;
-  font-weight: 500;
+  font-weight: 700; /* 2025年强化加粗，提升引导性 */
   text-decoration: underline;
   text-decoration-color: transparent;
+  text-underline-offset: 6px; /* 增加下划线距离 */
   color: var(--link-color);
-  transition: text-decoration .35s;
+  background: var(--background-color);
+  transition: all .3s ease;
 
   &:hover {
-    text-decoration-color: var(--heading-font-color);
+    text-decoration-color: var(--brand-color);
     color: var(--link-color-hover);
+    transform: translateX(4px); /* 增加微动效果 */
   }
 
   @media only screen and (max-width: $tablet) {
@@ -56,9 +74,4 @@
   @media only screen and (max-width: $mobile) {
     font-size: 16px;
   }
-}
-
-.section__title,
-.section__link {
-  background: var(--background-color);
 }

@@ -1,5 +1,9 @@
+/* 1. 引入基础设置 */
+@use "../0-settings/variables" as *;
+
 /* Contact */
 .contact-head {
+  /* 使用变量或硬编码保持间距统一 */
   margin-bottom: 32px;
 }
 
@@ -12,23 +16,34 @@
 }
 
 .form__input {
+  /* 2025年标准：移除浏览器默认外观 */
+  appearance: none; 
   width: 100%;
   padding: 20px;
   font-size: 16px;
   font-weight: 400;
   border: 2px solid var(--border-color);
-  border-radius: 2px;
+  border-radius: 4px; /* 稍微增加圆角，更符合现代审美 */
   outline: 0;
-  transition: .25s ease-in-out;
+  transition: border-color .25s ease-in-out, box-shadow .25s ease-in-out;
   resize: vertical;
   color: var(--heading-font-color);
   background-color: var(--background-alt-color);
 
   &::placeholder {
     color: var(--text-alt-color);
+    opacity: 0.8;
   }
 
+  /* 交互反馈增强 */
   &:focus {
     border-color: var(--brand-color);
+    /* 增加一个淡淡的外发光，提升视觉聚焦感 */
+    box-shadow: 0 0 0 4px rgba(var(--brand-color-rgb), 0.1); 
+  }
+
+  /* 移动端适配 */
+  @media only screen and (max-width: 576px) {
+    padding: 16px;
   }
 }

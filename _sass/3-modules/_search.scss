@@ -1,3 +1,6 @@
+/* 1. 必须位于首行：引入变量模块以修复 $desktop, $mobile 等变量未定义的错误 */
+@use "../0-settings/variables" as *;
+
 /* Search */
 .search {
   position: fixed;
@@ -6,20 +9,22 @@
   right: 0;
   bottom: 0;
   z-index: -1;
-  overflow: auto;
+  overflow-y: auto; /* 2025年优化：明确纵向滚动 */
+  -webkit-overflow-scrolling: touch; /* 增强移动端滚动流畅度 */
   opacity: 0;
   background: var(--background-color);
-  transition: all .25s ease;
+  transition: opacity .25s ease, z-index .25s step-end; /* 优化消失动画，防止点击穿透 */
 
   &.is-visible {
     z-index: 100;
     opacity: 1;
-    transition: all .25s ease;
+    transition: opacity .25s ease, z-index 0s;
   }
 }
 
 .search__box {
   max-width: 540px;
+  width: 90%; /* 2025年优化：确保在窄屏下有边距 */
   margin: 0 auto;
   padding-top: 120px;
 
@@ -34,56 +39,58 @@
 
   .search__close {
     position: absolute;
-    right: 28px;
+    right: 12px; /* 微调位置，防止与输入框文字重叠 */
     top: 50%;
     transform: translateY(-50%);
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
     font-size: 24px;
-    line-height: 1;
     border-radius: 50%;
     color: var(--heading-font-color);
+    background: var(--background-color);
     cursor: pointer;
     will-change: transform;
-    transition: all .25s;
-    background: var(--background-color);
+    transition: transform .3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 2;
 
     &:hover {
       transform: translateY(-50%) rotate(90deg);
-    }
-
-    .ion-md-close {
-      vertical-align: middle;
+      background: var(--background-alt-color);
     }
   }
 
   .search__text {
+    /* 2025年标准：移除浏览器原生样式 */
+    appearance: none;
     width: 100%;
-    padding: 28px;
+    padding: 24px 60px 24px 28px; /* 增加右内边距，避开关闭按钮 */
     font-size: 20px;
     font-weight: 700;
-    line-height: 24px;
+    line-height: 1.2;
     border: 2px solid transparent;
-    border-radius: 2px;
+    border-radius: 8px; /* 增加圆角，更现代 */
     color: var(--heading-font-color);
     background-color: var(--background-alt-color);
     outline: 0;
-    transition: all .25s;
+    transition: border-color .25s ease, box-shadow .25s ease;
 
     &::placeholder {
       font-weight: 700;
-      color: var(--heading-font-color);
+      color: var(--text-alt-color);
+      opacity: 0.6;
     }
 
     &:focus {
       border-color: var(--brand-color);
+      box-shadow: 0 0 0 4px rgba(var(--brand-color-rgb), 0.1);
     }
 
-    &::-ms-clear {
-      display: none;
+    &::-ms-clear,
+    &::-webkit-search-cancel-button {
+      display: none; /* 隐藏原生清除按钮，使用自定义关闭按钮 */
     }
   }
 
@@ -91,7 +98,8 @@
     margin-bottom: 32px;
 
     .search__text {
-      padding: 24px;
+      padding: 18px 52px 18px 20px;
+      font-size: 18px;
     }
   }
 }
@@ -99,8 +107,10 @@
 .search-results-list {
   .no-results {
     width: 100%;
-    margin: 0;
+    margin: 40px 0;
     text-align: center;
-    color: var(--heading-font-color);
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text-alt-color);
   }
 }

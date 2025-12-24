@@ -1,3 +1,6 @@
+/* 1. 必须位于首行：引入变量模块以修复 $desktop, $mobile, $heading-font-family 等未定义错误 */
+@use "../0-settings/variables" as *;
+
 /* Tags */
 .tag__head {
   margin: 80px 0;
@@ -19,6 +22,7 @@
   margin-bottom: 32px;
   font-size: 46px;
   font-weight: 900;
+  color: var(--heading-font-color);
 
   @media only screen and (max-width: $mobile) {
     font-size: 32px;
@@ -31,6 +35,7 @@
   flex-wrap: wrap;
   padding-bottom: 80px;
   border-bottom: 1px solid var(--background-alt-color);
+  list-style: none; /* 2025年优化：确保列表无样式 */
 
   .tag__item {
     margin-right: 12px;
@@ -45,14 +50,16 @@
     display: block;
     padding: 12px 16px;
     font-size: 16px;
-    font-weight: 500;
+    font-weight: 700; /* 增加权重，提升可读性 */
     text-transform: capitalize;
     border-radius: 8px;
-    transition: none;
+    transition: all 0.2s ease;
     background: var(--background-alt-color);
+    color: var(--heading-font-color);
 
     &:hover {
-      color: var(--heading-font-color);
+      background: var(--brand-color);
+      color: var(--white);
     }
   }
 
@@ -66,6 +73,7 @@
 
     .tag__link {
       font-size: 14px;
+      padding: 10px 14px;
     }
   }
 }
@@ -89,8 +97,12 @@
   }
 
   @media only screen and (max-width: $mobile) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+
     &::after {
-      content: none;
+      display: none;
     }
   }
 }
@@ -105,20 +117,24 @@
   flex-direction: column;
   align-items: center;
   padding: 12px 24px;
-  border-radius: 8px;
+  border-radius: 12px; /* 增加圆角 */
   color: var(--heading-font-color);
   background: var(--background-alt-color);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
 
   span {
     font-family: $heading-font-family;
     font-size: 32px;
-    font-weight: 700;
+    font-weight: 900; /* 加重数字 */
     line-height: 1;
   }
 
   small {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.8;
   }
 
   @media only screen and (max-width: $mobile) {
@@ -127,15 +143,18 @@
 }
 
 .tag__name {
-  padding: 50px 20px 50px 20px;
+  padding: 40px 20px;
   margin-bottom: 0;
   font-size: 36px;
+  font-weight: 900;
   text-transform: capitalize;
   background-color: var(--background-color);
+  color: var(--heading-font-color);
 
   span {
     font-weight: 400;
     color: var(--text-alt-color);
+    margin-right: 8px;
   }
 
   @media only screen and (max-width: $tablet) {
@@ -143,28 +162,35 @@
   }
 
   @media only screen and (max-width: $mobile) {
-    padding: 32px 12px 32px 0;
+    padding: 24px 0;
     font-size: 26px;
   }
 }
 
 .top__link {
-  padding-left: 20px;
-  font-size: 18px;
-  font-weight: 500;
-  text-decoration: underline;
-  text-decoration-color: transparent;
+  padding: 8px 16px;
+  font-size: 16px;
+  font-weight: 700;
+  border-radius: 6px;
   color: var(--link-color);
-  transition: text-decoration .35s;
-  background: var(--background-color);
+  background: var(--background-alt-color);
+  transition: all .3s ease;
 
   &:hover {
-    text-decoration-color: var(--heading-font-color);
-    color: var(--link-color-hover);
+    background: var(--brand-color);
+    color: var(--white);
+    transform: translateY(-2px);
   }
 
   @media only screen and (max-width: $mobile) {
-    padding-left: 0;
-    font-size: 16px;
+    padding: 0;
+    background: transparent;
+    text-decoration: underline;
+    
+    &:hover {
+      background: transparent;
+      color: var(--link-color-hover);
+      transform: none;
+    }
   }
 }
