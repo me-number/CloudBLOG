@@ -1,4 +1,10 @@
 /**
+ * 引入变量定义
+ * 注意：根据你的目录结构，路径通常指向 0-settings/_variables.scss
+ */
+@use "../0-settings/variables" as *;
+
+/**
  * Shared declarations for certain elements.
  */
 
@@ -19,6 +25,7 @@ pre {
 
 ul, ol,
 dd {
+  /* 现在可以正常识别 $base-spacing-unit 了 */
   margin-left: $base-spacing-unit;
 }
 
