@@ -319,46 +319,6 @@
   }
 }
 
-/* Disqus */
-.show-comments {
-  margin: 48px 0 32px;
-  text-align: center;
-
-  .disqus-button {
-    padding: 28px;
-    border-radius: 8px;
-    text-decoration: underline;
-    text-decoration-color: transparent;
-
-    &:hover {
-      text-decoration-color: var(--heading-font-color);
-    }
-  }
-
-  @media only screen and (max-width: $mobile) {
-    margin: 60px 0 0;
-
-    .disqus-button {
-      padding: 24px;
-    }
-  }
-}
-
-.post__comments {
-  max-width: 760px;
-  margin: 0 auto;
-
-  &.is-open {
-    margin: 0 auto 32px;
-  }
-
-  @media only screen and (max-width: $mobile) {
-     &.is-open {
-       margin: 0 auto;
-     }
-  }
-}
-
 /* 404 */
 .error {
   text-align: center;
