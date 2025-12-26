@@ -1,14 +1,11 @@
-
 #-------------------------------
 # Site Settings
-title: Data Umbrella
-logo: '../images/logo/du-logo.jpg' # transparent background
-logo_dark: '../images/logo/du-logo.jpg' # white background
-description: Data Umbrella Blogs and Resources
+title: Cloud BLOG
+logo: # You can add own logo. For example '/images/logo.png'.
+description: Personal website and blog.
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "https://blog.dataumbrella.org" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://zhang-wentao.tech" # the base hostname & protocol for your site, e.g. http://example.com
 color_scheme: auto # You can choose three modes auto, light, and dark. By default, the auto mode is set, which means the user can choose the light or dark mode themself.
-global_website: "https://www.dataumbrella.org"
 
 #-------------------------------
 # Navigation Settings
@@ -16,6 +13,8 @@ menu_settings:
   menu_items:
     - title: "Home"
       url: "/"
+    - title: "Tags"
+      url: "/tags/"
     - title: "Contact"
       url: "/contact/"
     - title: "RSS"
@@ -26,10 +25,6 @@ menu_settings:
 contact:
   form_id: https://formspree.io/f/mgerdblk # Add your form_id
   description: # Menca comes with a built-in contact form, that you can use with Formspree service to handle up to 50 submissions per month for free. You could also easily switch to another contact form service if you want. # Add a description of your form
-
-# NOTE
-# Menca theme comes with a contact form built-in. You can use this form with Formspree (https://formspree.io/) service and get up to 50 submissions for free. Also, you can easily switch to another service if you want.
-
 
 #-------------------------------
 # Comment Section (Disqus)
