@@ -4,8 +4,7 @@
   margin-bottom: 48px;
 
   .row {
-    /* 确保内部列在容器中水平居中 */
-    justify-content: center; 
+    /* 保持原来的对齐方式 */
     align-items: center;
   }
 
@@ -18,147 +17,14 @@
   }
 }
 
-/* 统一媒体显示区域（图片和视频全部按照 760px 居中模式） */
+/* 媒体显示区域：保持原来风格 (不限制 760px) */
 .post-image,
 .page-image,
 .post-video,
 .page-video {
   position: relative;
-  max-width: 760px;       /* 强制限制 760px */
-  margin: 0 auto 48px;    /* 水平居中，并设置底部间距 */
-  border-radius: 8px;
-  overflow: hidden;
-  background: var(--background-alt-color);
-  transform: translate(0);
-
-  /* 比例控制 (16:9) */
-  padding-top: 56.25%; 
-  min-height: 0;
-
-  img, iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: none;
-  }
-  
-  img {
-    object-fit: cover;
-    user-select: none;
-  }
-
-  @media only screen and (max-width: $desktop) {
-    margin-bottom: 40px;
-  }
-
-  @media only screen and (max-width: $mobile) {
-    margin-bottom: 32px;
-  }
-}
-
-/* 文字信息区域（标题和标签）- 统一按照视频文章格式显示 */
-.post__info,
-.page__info {
-  max-width: 760px;       /* 强制限制 760px */
-  margin: 0 auto;         /* 水平居中对齐，移除之前的 margin-left: 44px */
-  padding: 0;
-
-  /* 移除之前可能干扰对齐的所有偏移量 */
-  @media only screen and (max-width: $desktop) {
-    margin-left: auto;
-    margin-right: auto;
-  }
-}
-
-/* 标签样式统一 */
-.post__tags {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  margin-bottom: 20px;
-  
-  .post__tag {
-    padding: 12px 16px;
-    margin: 4px 8px 4px 0;
-    font-size: 14px;
-    line-height: 1;
-    font-weight: 500;
-    text-transform: capitalize;
-    border-radius: 8px;
-    color: var(--heading-font-color);
-    background-color: var(--background-alt-color);
-  
-    &:last-child {
-      margin-right: 0;
-    }
-  }
-
-  @media only screen and (max-width: $mobile) {
-    margin-bottom: 16px;
-  }
-}
-
-/* 标题样式统一 */
-.post__title,
-.page__title {
-  margin-bottom: 24px;
-  font-size: 46px;
-  line-height: 1.2;
-  font-weight: 900;
-  text-align: left; /* 文字靠左，但容器在 760px 内居中 */
-
-  @media only screen and (max-width: $mobile) {
-    margin-bottom: 20px;
-    font-size: 32px;
-  }
-}
-
-/* 正文主体保持 760px */
-.post,
-.page {
-  max-width: 760px;
-  margin: 0 auto 60px;
-}
-
-/* 其他：全屏图片 (#wide) 依然允许突破限制 */
-img[src$='#wide'] {
-  display: block;
-  width: 100vw;
-  max-width: none;
-  margin-left: 50%;
-  transform: translateX(-50%);
-  border-radius: 0;
-}
-/* Post + Page 头部容器 */
-.post-head,
-.page-head {
+  width: 100%;            /* 恢复原来的宽度风格 */
   margin-bottom: 48px;
-
-  .row {
-    /* 确保内部列在容器中水平居中 */
-    justify-content: center; 
-    align-items: center;
-  }
-
-  @media only screen and (max-width: $desktop) {
-    margin-bottom: 40px;
-  }
-
-  @media only screen and (max-width: $mobile) {
-    margin-bottom: 32px;
-  }
-}
-
-/* 统一媒体显示区域（图片和视频全部按照 760px 居中模式） */
-.post-image,
-.page-image,
-.post-video,
-.page-video {
-  position: relative;
-  max-width: 760px;       /* 强制限制 760px */
-  margin: 0 auto 48px;    /* 水平居中，并设置底部间距 */
   border-radius: 8px;
   overflow: hidden;
   background: var(--background-alt-color);
@@ -191,14 +57,13 @@ img[src$='#wide'] {
   }
 }
 
-/* 文字信息区域（标题和标签）- 统一按照视频文章格式显示 */
+/* 文字信息区域（标题和标签）：统一修改为 760px 居中风格 */
 .post__info,
 .page__info {
-  max-width: 760px;       /* 强制限制 760px */
-  margin: 0 auto;         /* 水平居中对齐，移除之前的 margin-left: 44px */
+  max-width: 760px;       /* 标题区域限制在 760px */
+  margin: 0 auto;         /* 水平居中，移除之前的左侧偏移 */
   padding: 0;
 
-  /* 移除之前可能干扰对齐的所有偏移量 */
   @media only screen and (max-width: $desktop) {
     margin-left: auto;
     margin-right: auto;
@@ -227,10 +92,6 @@ img[src$='#wide'] {
       margin-right: 0;
     }
   }
-
-  @media only screen and (max-width: $mobile) {
-    margin-bottom: 16px;
-  }
 }
 
 /* 标题样式统一 */
@@ -240,7 +101,7 @@ img[src$='#wide'] {
   font-size: 46px;
   line-height: 1.2;
   font-weight: 900;
-  text-align: left; /* 文字靠左，但容器在 760px 内居中 */
+  text-align: left; 
 
   @media only screen and (max-width: $mobile) {
     margin-bottom: 20px;
@@ -255,7 +116,7 @@ img[src$='#wide'] {
   margin: 0 auto 60px;
 }
 
-/* 其他：全屏图片 (#wide) 依然允许突破限制 */
+/* 其他：全屏图片 (#wide) */
 img[src$='#wide'] {
   display: block;
   width: 100vw;
