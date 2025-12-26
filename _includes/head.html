@@ -7,49 +7,43 @@
   <title>{% if page.title %}{{ page.title }}{% else %}{{ site.data.settings.title }}{% endif %}</title>
   <meta name='description' content='{% if page.description %}{{ page.description | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.data.settings.description }}{% endif %}'>
 
-
   <link rel="canonical" href="{{ page.url | replace:'index.html','' | absolute_url }}">
   <link rel="alternate" type="application/rss+xml" title="{{ site.data.settings.title | escape }}" href="{{ "/feed.xml" | relative_url }}">
 
-  <!-- 2. 性能优化：预加载 LCP 关键图片 (路径确保一致) -->
+  <!-- 1. 性能优化：预加载 LCP 关键图片 -->
   {% if site.data.settings.logo %}
   <link rel="preload" as="image" href="{{ site.data.settings.logo | relative_url }}" fetchpriority="high">
   {% endif %}
+  <!-- 逻辑：首页不预加载背景图，仅详情页预加载，避免资源竞争 -->
   {% if page.image and page.url != "/" %}
   <link rel="preload" as="image" href="{{ page.image | relative_url }}" fetchpriority="high">
   {% endif %}
 
-  <!-- 在 head.html 中加入，路径必须与 CSS 里的 url 一致 -->
+  <!-- 2. 性能优化：预加载本地字体（路径必须与 SCSS 里的 url 一致） -->
   <link rel="preload" href="{{ '/fonts/fa-solid-900.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin>
-  <!-- 在 head.html 中加入 -->
   <link rel="preload" href="{{ '/fonts/fa-regular-400.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin>
-  <!-- 在 head.html 中加入，路径必须与 CSS 里的 url 一致 -->
-  <link rel="preload" href="/fonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="{{ '/fonts/fa-brands-400.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin>
 
-
-
-  <!-- 3. 异步加载主 CSS (带时间戳) -->
+  <!-- 3. 异步加载主 CSS (带时间戳防缓存) -->
   <link rel="stylesheet" href="{{ '/css/main.css' | relative_url }}?v={{ site.time | date: '%Y%m%d%H%M' }}" media="print" onload="this.media='all'">
-  
-  <!-- 5. 字体优化：确保异步加载 -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;700;900&display=swap" media="print" onload="this.media='all'">
 
   <noscript>
     <link rel="stylesheet" href="{{ '/css/main.css' | relative_url }}?v={{ site.time | date: '%Y%m%d%H%M' }}">
   </noscript>
 
-  <!-- 6. 主题色切换脚本（内联执行，防止白屏闪烁） -->
+  <!-- 5. 主题色切换与背景锁定脚本（内联执行，防止白屏闪烁） -->
   <script>
     (function() {
       var theme = localStorage.getItem("theme");
       var config = "{{ site.data.settings.color_scheme }}";
       
-      // 2025 优化：在 CSS 加载前先通过 JS 锁定背景色，缓解“屏蔽渲染”导致的白屏
-      var initialBg = (theme === "dark" || (!theme && window.matchMedia("(prefers-color-scheme: dark)").matches)) ? "#121212" : "#ffffff";
+      // 2025 优化：在 CSS 加载前通过 JS 锁定背景色，缓解“屏蔽渲染”导致的白屏
+      var isDark = theme === "dark" || (!theme && window.matchMedia("(prefers-color-scheme: dark)").matches);
+      var initialBg = isDark ? "#121212" : "#ffffff";
       document.documentElement.style.backgroundColor = initialBg;
 
       if (config === "auto" || config === "") {
-        if (theme === "dark" || (!theme && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+        if (isDark) {
           document.documentElement.setAttribute("dark", "");
           document.documentElement.classList.add('dark-mode');
         }
@@ -60,21 +54,21 @@
     })();
   </script>
 
-  <!-- 7. 全平台禁止缩放脚本 -->
+  <!-- 6. 全平台禁止缩放脚本 -->
   <script defer>
     (function() {
-      // 键盘与滚轮
+      // 键盘快捷键与滚轮拦截 (Windows/macOS)
       document.addEventListener('keydown', function (e) {
         if ((e.ctrlKey || e.metaKey) && ['+', '-', '=', '0'].includes(e.key)) e.preventDefault();
       }, { passive: false });
       document.addEventListener('wheel', function (e) {
         if (e.ctrlKey || e.metaKey) e.preventDefault();
       }, { passive: false });
-      // 移动端多指
+      // 移动端多指缩放拦截
       document.addEventListener('touchstart', function (e) {
         if (e.touches.length > 1) e.preventDefault();
       }, { passive: false });
-      // iOS 双击
+      // iOS 专用：禁止双击放大
       let lastTouch = 0;
       document.addEventListener('touchend', function (e) {
         const now = Date.now();
