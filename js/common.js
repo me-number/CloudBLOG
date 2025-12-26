@@ -101,7 +101,8 @@ document.addEventListener("DOMContentLoaded", function() {
   // LazyLoad Images
   ======================= */
   var lazyLoadInstance = new LazyLoad({
-    elements_selector: ".lazy"
+    elements_selector: ".lazy",
+    use_native: true  // 优先使用原生loading特性
   })
 
 
