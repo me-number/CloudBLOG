@@ -4,7 +4,6 @@
   margin-bottom: 48px;
 
   .row {
-    /* 保持原来的对齐方式 */
     align-items: center;
   }
 
@@ -17,20 +16,21 @@
   }
 }
 
-/* 媒体显示区域：保持原来风格 (不限制 760px) */
+/* 媒体显示区域：不裁剪显示完整图片 */
 .post-image,
 .page-image,
 .post-video,
 .page-video {
   position: relative;
-  width: 100%;            /* 恢复原来的宽度风格 */
+  width: 100%;
   margin-bottom: 48px;
   border-radius: 8px;
   overflow: hidden;
-  background: var(--background-alt-color);
+  /* 如果图片比例与容器不符，背景色会填充空白区域 */
+  background: var(--background-alt-color); 
   transform: translate(0);
 
-  /* 比例控制 (16:9) */
+  /* 保持 16:9 的固定容器比例，确保页面加载时不跳动 */
   padding-top: 56.25%; 
   min-height: 0;
 
@@ -44,7 +44,8 @@
   }
   
   img {
-    object-fit: cover;
+    /* 核心修改：使用 contain 确保图片完整显示，不被裁剪 */
+    object-fit: contain; 
     user-select: none;
   }
 
@@ -57,11 +58,11 @@
   }
 }
 
-/* 文字信息区域（标题和标签）：统一修改为 760px 居中风格 */
+/* 文字信息区域：760px 居中 */
 .post__info,
 .page__info {
-  max-width: 760px;       /* 标题区域限制在 760px */
-  margin: 0 auto;         /* 水平居中，移除之前的左侧偏移 */
+  max-width: 760px;
+  margin: 0 auto;
   padding: 0;
 
   @media only screen and (max-width: $desktop) {
@@ -70,7 +71,7 @@
   }
 }
 
-/* 标签样式统一 */
+/* 标签样式 */
 .post__tags {
   display: flex;
   align-items: center;
@@ -94,7 +95,7 @@
   }
 }
 
-/* 标题样式统一 */
+/* 标题样式 */
 .post__title,
 .page__title {
   margin-bottom: 24px;
