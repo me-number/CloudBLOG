@@ -5,18 +5,27 @@ layout: default
 <div class="post-head">
   <div class="container">
     <div class="row">
-
+      
       {% if page.video_embed %}
+      <!-- 视频播放区域 -->
       <div class="col col-12">
         <div class="post-video">
           <div class="post-video__wrap">
-            <iframe src="{{ page.video_embed }}" loading="lazy" width="640" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+            <iframe 
+              src="{{ page.video_embed }}" 
+              loading="lazy" 
+              width="640" 
+              height="360" 
+              frameborder="0" 
+              allowfullscreen>
+            </iframe>
           </div>
         </div>
       </div>
-      {% else %}
 
-       {% if page.image %}
+      {% else %}
+      
+      {% if page.image %}
       <!-- 图片显示区域 -->
        <div class="col col-12">
         <div class="post-image">
@@ -31,12 +40,13 @@ layout: default
       </div>
       {% endif %}
 
+
       {% endif %}
-
-      {% if page.video_embed %} {% assign videoInfo = 'post__info-video' %} {% endif %}
-      <div class="col {% if page.video_embed %}col-12{% else %}col-6 col-d-12{% endif %}">
-        <div class="post__info {{videoInfo}}">
-
+      
+      <!-- 文字信息区域（标题和标签） -->
+      <div class="col col-12">
+        <div class="post__info {% if page.video_embed %}post__info-video{% endif %}">
+  
           {% if page.tags.size >= 1 %}
             <div class="post__tags">
               {% for tag in page.tags %}
@@ -44,14 +54,14 @@ layout: default
               {% endfor %}
             </div>
           {% endif %}
-
+  
           <h1 class="post__title">{{ page.title | escape }}</h1>
-
-        </div>
+        </div> <!-- 已闭合 post__info -->
       </div>
-    </div>
-  </div>
-</div>
+
+    </div> <!-- 已闭合 row -->
+  </div> <!-- 已闭合 container -->
+</div> <!-- 已闭合 post-head -->
 
 <!-- begin post -->
 <div class="container animate">
@@ -62,19 +72,8 @@ layout: default
       {{ content }}
     </div>
 
-
   </article>
 </div>
 <!-- end post -->
 
 {% include related-posts.html %}
-
-{% if site.data.settings.disqus.enable == true and site.data.settings.disqus.disqus_identifier %}
-  <div class="container">
-    <div class="row">
-      <div class="col col-12">
-        {% include disqus-comments.html %}
-      </div>
-    </div>
-  </div>
-{% endif %}
