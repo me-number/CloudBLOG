@@ -1,7 +1,7 @@
-baseurl: "" # the subpath of your site, e.g. /blog
-url: "https://zhang-wentao.tech" # the base hostname & protocol for your site, e.g. http://example.com
 #-------------------------------
 # Site Settings
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "https://zhang-wentao.tech" # the base hostname & protocol for your site, e.g. http://example.com
 title: Cloud BLOG
 logo: # You can add own logo. For example '/images/logo.png'.
 description: Personal website and blog.
