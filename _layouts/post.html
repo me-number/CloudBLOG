@@ -7,46 +7,27 @@ layout: default
     <div class="row">
       
       {% if page.video_embed %}
-      <!-- 视频播放区域 -->
+      <!-- 视频区域 -->
       <div class="col col-12">
         <div class="post-video">
           <div class="post-video__wrap">
-            <iframe 
-              src="{{ page.video_embed }}" 
-              loading="lazy" 
-              width="640" 
-              height="360" 
-              frameborder="0" 
-              allowfullscreen>
-            </iframe>
+            <iframe src="{{ page.video_embed }}" loading="lazy" frameborder="0" allowfullscreen></iframe>
           </div>
         </div>
       </div>
-
-      {% else %}
-      
-      {% if page.image %}
-      <!-- 图片显示区域 -->
-       <div class="col col-12">
+      {% elsif page.image %}
+      <!-- 图片区域 -->
+      <div class="col col-12">
         <div class="post-image">
-          <img 
-          class="lazy" 
-          data-src="{{site.baseurl}}{{page.image}}" 
-          alt="{{page.title}}" 
-          width="640" 
-          height="360"
-          >
+          <img class="lazy" data-src="{{site.baseurl}}{{page.image}}" alt="{{page.title}}">
         </div>
       </div>
       {% endif %}
-
-
-      {% endif %}
       
-      <!-- 文字信息区域（标题和标签） -->
+      <!-- 文字信息区域 -->
       <div class="col col-12">
-        <div class="post__info {% if page.video_embed %}post__info-video{% endif %}">
-  
+        <!-- 统一使用 post__info，它在 CSS 中已限制 760px 居中 -->
+        <div class="post__info">
           {% if page.tags.size >= 1 %}
             <div class="post__tags">
               {% for tag in page.tags %}
@@ -54,14 +35,13 @@ layout: default
               {% endfor %}
             </div>
           {% endif %}
-  
           <h1 class="post__title">{{ page.title | escape }}</h1>
-        </div> <!-- 已闭合 post__info -->
+        </div>
       </div>
 
-    </div> <!-- 已闭合 row -->
-  </div> <!-- 已闭合 container -->
-</div> <!-- 已闭合 post-head -->
+    </div>
+  </div>
+</div>
 
 <!-- begin post -->
 <div class="container animate">
