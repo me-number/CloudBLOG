@@ -7,10 +7,14 @@
   <title>{% if page.title %}{{ page.title }}{% else %}{{ site.data.settings.title }}{% endif %}</title>
   <meta name='description' content='{% if page.description %}{{ page.description | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}'>
 
+  <!-- 2. DNS 预解析：减少外部资源（如图标、字体）连接时间 -->
+  <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+  <link rel="dns-prefetch" href="//fonts.googleapis.com">
+
   <link rel="canonical" href="{{ page.url | replace:'index.html','' | absolute_url }}">
   <link rel="alternate" type="application/rss+xml" title="{{ site.data.settings.title | escape }}" href="{{ "/feed.xml" | relative_url }}">
 
-  <!-- 2. 性能优化：预加载 LCP 关键图片 (Logo 和 文章封面) -->
+  <!-- 3. 性能优化：预加载 LCP 关键图片 -->
   {% if site.data.settings.logo %}
   <link rel="preload" as="image" href="{{ site.baseurl }}{{ site.data.settings.logo }}" fetchpriority="high">
   {% endif %}
@@ -18,67 +22,65 @@
   <link rel="preload" as="image" href="{{ page.image | relative_url }}" fetchpriority="high">
   {% endif %}
 
-  <!-- 3. 主题色切换脚本 (保持原样，放置在最前防止闪屏) -->
-  <script>
-    {% if site.data.settings.color_scheme == "auto" %}
-    if (localStorage.getItem("theme") === "dark" || (!localStorage.getItem("theme") && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
-      document.documentElement.setAttribute("dark", "");
-      document.documentElement.classList.add('dark-mode');
+  <!-- 4. 解决“屏蔽渲染”警告：异步加载主 CSS，并内嵌关键样式 -->
+  <style>
+    /* 内嵌核心 CSS：确保背景颜色和基础结构瞬间显示，不等待 main.css 下载 */
+    :root { --background-color: #ffffff; --heading-font-color: #000000; }
+    [dark] { --background-color: #121212; --heading-font-color: #ffffff; }
+    html, body { 
+      background-color: var(--background-color); 
+      margin: 0; padding: 0; 
+      touch-action: pan-x pan-y; 
+      -webkit-text-size-adjust: 100%; 
     }
-    {% elsif site.data.settings.color_scheme == "light" %}
-      document.documentElement.setAttribute("light", "");
-      document.documentElement.classList.add('light-mode');
-    {% elsif site.data.settings.color_scheme == "dark" %}
-      document.documentElement.setAttribute("dark", "");
-      document.documentElement.classList.add('dark-mode');
-    {% else %}
-    if (localStorage.getItem("theme") === "dark") {
-      document.documentElement.setAttribute("dark", "");
-      document.documentElement.classList.add('dark-mode');
-    }
-    {% endif %}
-  </script>
+    .header, .post-head { display: block; }
+    /* 预留图片容器位置，防止布局偏移 */
+    .post-image, .page-image { background: var(--background-alt-color, #eee); min-height: 250px; }
+  </style>
+  
+  <!-- 使用 print 模式异步加载，加载完成后切换回 all。这是 2025 年最有效的非阻塞加载方式 -->
+  <link rel="stylesheet" href="{{ '/css/main.css' | relative_url }}" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="{{ '/css/main.css' | relative_url }}"></noscript>
 
-  <!-- 4. 全平台禁止缩放脚本 (增强版：修复 Windows 兼容性 & iOS 双击放大) -->
+  <!-- 5. 主题色切换脚本 (内联执行，防止页面闪烁) -->
   <script>
     (function() {
-      // 禁止键盘缩放 (Ctrl + +/-/0)
-      document.addEventListener('keydown', function (event) {
-        if ((event.ctrlKey || event.metaKey) && ['+', '-', '=', '0'].includes(event.key)) {
-          event.preventDefault();
+      var theme = localStorage.getItem("theme");
+      var config = "{{ site.data.settings.color_scheme }}";
+      if (config === "auto" || config === "") {
+        if (theme === "dark" || (!theme && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+          document.documentElement.setAttribute("dark", "");
+          document.documentElement.classList.add('dark-mode');
         }
-      }, { passive: false });
-
-      // 禁止鼠标滚轮缩放 (Ctrl + Scroll)
-      document.addEventListener('wheel', function (event) {
-        if (event.ctrlKey || event.metaKey) {
-          event.preventDefault();
-        }
-      }, { passive: false });
-
-      // 禁止移动端多指缩放
-      document.addEventListener('touchstart', function (event) {
-        if (event.touches.length > 1) {
-          event.preventDefault();
-        }
-      }, { passive: false });
-
-      // 额外防护：禁止 iOS 双击缩放
-      let lastTouchEnd = 0;
-      document.addEventListener('touchend', function (event) {
-        const now = Date.now();
-        if (now - lastTouchEnd <= 300) {
-          event.preventDefault();
-        }
-        lastTouchEnd = now;
-      }, false);
+      } else if (config === "dark") {
+        document.documentElement.setAttribute("dark", "");
+        document.documentElement.classList.add('dark-mode');
+      }
     })();
   </script>
 
-  <!-- 5. 样式表 (添加 touch-action 补充) -->
-  <link rel="stylesheet" href="{{ '/css/main.css' | relative_url }}">
-  <style>
-    /* CSS 层面再次锁定禁止缩放手势 */
-    html, body { touch-action: pan-x pan-y; -webkit-text-size-adjust: 100%; }
-  </style>
+  <!-- 6. 全平台禁止缩放脚本 -->
+  <script defer>
+    (function() {
+      // 禁止键盘缩放
+      document.addEventListener('keydown', function (e) {
+        if ((e.ctrlKey || e.metaKey) && ['+', '-', '=', '0'].includes(e.key)) e.preventDefault();
+      }, { passive: false });
+      // 禁止滚轮缩放
+      document.addEventListener('wheel', function (e) {
+        if (e.ctrlKey || e.metaKey) e.preventDefault();
+      }, { passive: false });
+      // 禁止移动端手势
+      document.addEventListener('touchstart', function (e) {
+        if (e.touches.length > 1) e.preventDefault();
+      }, { passive: false });
+      // 禁止 iOS 双击缩放
+      let lastTouch = 0;
+      document.addEventListener('touchend', function (e) {
+        const now = Date.now();
+        if (now - lastTouch <= 300) e.preventDefault();
+        lastTouch = now;
+      }, false);
+    })();
+  </script>
 </head>
