@@ -29,5 +29,47 @@
     {% endif %}
   </script>
 
+  <script>
+// 1. 禁止键盘快捷键缩放 (针对 Windows: Ctrl + / MacOS: Command +)
+document.addEventListener('keydown', function (event) {
+  // 拦截 Ctrl/Command 配合 +、-、0、= 的缩放行为
+  const isZoomKey = (event.ctrlKey || event.metaKey) && 
+                    ['+', '-', '=', '0', '1'].includes(event.key);
+  // 针对部分浏览器识别码不同的特殊处理
+  const isZoomCode = (event.ctrlKey || event.metaKey) && 
+                     (event.keyCode === 187 || event.keyCode === 189 || event.keyCode === 48 || event.keyCode === 107 || event.keyCode === 109);
+
+  if (isZoomKey || isZoomCode) {
+    event.preventDefault();
+    return false;
+  }
+}, { passive: false });
+
+// 2. 禁止鼠标滚轮缩放 (Ctrl + 滚轮)
+document.addEventListener('wheel', function (event) {
+  if (event.ctrlKey || event.metaKey) {
+    event.preventDefault();
+  }
+}, { passive: false });
+
+// 3. 禁止移动端双指手势缩放 (针对移动端 Safari/Chrome)
+document.addEventListener('touchstart', function (event) {
+  if (event.touches.length > 1) {
+    event.preventDefault();
+  }
+}, { passive: false });
+
+// 4. 禁止双击缩放 (针对 iOS Safari)
+let lastTouchEnd = 0;
+document.addEventListener('touchend', function (event) {
+  const now = (new Date()).getTime();
+  if (now - lastTouchEnd <= 300) {
+    event.preventDefault();
+  }
+  lastTouchEnd = now;
+}, false);
+</script>
+
+
   <link rel="stylesheet" href="{{ '/css/main.css' | relative_url }}">
 </head>
