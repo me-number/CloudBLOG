@@ -1,0 +1,24 @@
+{
+  "name": "cloudblog",
+  "version": "1.0.0",
+  "description": "CloudBLOG 是一款专为 [Jekyll](https://jekyllrb.com) 打造的极简、高性能博客主题，特别针对**视频内容创作者**和创意博主设计。它极致轻量，完美支持移动端阅读。",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/me-number/CloudBLOG.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/me-number/CloudBLOG/issues"
+  },
+  "homepage": "https://github.com/me-number/CloudBLOG#readme",
+  "devDependencies": {
+    "purgecss": "^7.0.2"
+  }
+}
