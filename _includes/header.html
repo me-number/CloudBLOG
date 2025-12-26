@@ -5,11 +5,11 @@
       <div class="header__inner col col-12">
 
         <div class="logo">
-          <a class="logo__link" href="{{ site.baseurl }}/">
+          <a class="logo__link" href="{{ site.data.settings.baseurl }}/">
           {% if site.data.settings.logo or site.data.settings.logo_dark %}
             <!-- 核心优化：添加 fetchpriority="high" 并显式声明 loading="eager" -->
-            <img class="logo__image" src="{{ site.baseurl }}{{ site.data.settings.logo }}" alt="{{ site.data.settings.title }}" fetchpriority="high" loading="eager">
-            <img class="logo__image__dark" src="{{ site.baseurl }}{{ site.data.settings.logo_dark }}" alt="{{ site.data.settings.title }}" fetchpriority="high" loading="eager">
+            <img class="logo__image" src="{{ site.data.settings.baseurl }}{{ site.data.settings.logo }}" alt="{{ site.data.settings.title }}" fetchpriority="high" loading="eager">
+            <img class="logo__image__dark" src="{{ site.data.settings.baseurl }}{{ site.data.settings.logo_dark }}" alt="{{ site.data.settings.title }}" fetchpriority="high" loading="eager">
           {% else %}
             {{ site.data.settings.title }}
           {% endif %}

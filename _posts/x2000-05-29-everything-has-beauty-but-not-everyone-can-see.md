@@ -14,7 +14,7 @@ Bring to the table win-win survival strategies to ensure proactive domination. A
 
 Podcasting operational change management inside of workflows to establish a framework. Taking seamless key performance indicators offline to maximise the long tail. Keeping your eye on the ball while performing a deep dive on the start-up mentality to derive convergence on cross-platform integration.
 
-![Beach]({{site.baseurl}}/images/template_images/12-1.jpg#wide)
+![Beach]({{site.data.settings.baseurl}}/images/template_images/12-1.jpg#wide)
 *Photo by [Luke McKeown](https://unsplash.com/photos/nlyWZtWTzCo) on [Unsplash](https://unsplash.com/)*
 
 Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.
@@ -31,7 +31,7 @@ Phosfluorescently engage worldwide methodologies with web-enabled technology. In
 
 Collaboratively administrate turnkey channels whereas virtual e-tailers. Objectively seize scalable metrics whereas proactive e-services. Seamlessly empower fully researched growth strategies and interoperable internal or "organic" sources.
 
-![Beach]({{site.baseurl}}/images/template_images/12-2.jpg)
+![Beach]({{site.data.settings.baseurl}}/images/template_images/12-2.jpg)
 *Photo by [Tatonomusic](https://unsplash.com/photos/FFCgotROOTY) on [Unsplash](https://unsplash.com/)*
 
 Completely synergize resource taxing relationships via premier niche markets. Professionally cultivate one-to-one customer service with robust ideas. Dynamically innovate resource-leveling customer service for state of the art customer service.
