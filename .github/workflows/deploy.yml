@@ -28,7 +28,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "22"
-          cache: 'pnpm'
+          # cache: 'pnpm'  # 暂时注释掉这一行，先让部署跑通
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -58,4 +58,5 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
 
