@@ -2,7 +2,7 @@ name: Deploy Next.js to Pages
 
 on:
   push:
-    branches: ["main"] # 监听 main 分支的推送
+    branches: ["main"]
 
 permissions:
   contents: read
@@ -16,25 +16,34 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # 1. 必须先安装 pnpm，否则 setup-node 找不到 pnpm 缓存路径
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 8.15.8
+
+      # 2. 修改 Setup Node 配置
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: "20" # 建议使用 2025 年稳定的 Node 版本
-          cache: 'npm'
+          node-version: "20"
+          cache: 'pnpm' # 只有先装了 pnpm，这里才不会报错
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
       - name: Install dependencies
-        run: npm install
+        # 使用 --frozen-lockfile 确保环境一致性
+        run: pnpm install --frozen-lockfile
 
       - name: Build with Next.js
-        run: npm run build
+        # 确保你在 next.config.js 中设置了 output: 'export'
+        run: pnpm run build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./out # Next.js 静态导出的默认目录
+          path: ./out
 
   deploy:
     environment:
@@ -46,3 +55,4 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
