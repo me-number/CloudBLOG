@@ -1,9 +1,9 @@
 {
-  "name": "futi",
+  "name": "zhang-wentao.tech",
   "private": true,
-  "version": "1.0.2",
-  "author": "LF112",
-  "license": "AGPL-3.0-or-later",
+  "version": "0.0.1",
+  "author": "Zhang Wentao <mailbox@zhang-wentao.tech> (https://zhang-wentao.tech/) (https://github.com/me-number/zhang-wentao.tech)",
+  "license": "MIT",
   "type": "module",
   "scripts": {
     "build": "rsbuild build",
