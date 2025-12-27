@@ -2,47 +2,34 @@ import React from 'react';
 
 import { BasicsProps } from '@/components/type.ts';
 
-/**
- * ZwtPath: 使用文字路径渲染“张文涛”
- * 这种方式比纯坐标点更易维护，且支持通过 CSS 修改字体
- */
-const ZwtPath: React.FC<BasicsProps<'text', 'fill'>> = (props) => (
-  <text
-    x="50%"
-    y="50%"
-    dominantBaseline="central"
-    textAnchor="middle"
-    fontWeight="bold"
-    fontSize="60"
-    fontFamily="sans-serif"
+const FutiPath: React.FC<BasicsProps<'path', 'fill'>> = (props) => (
+  <path
+    /* 这里的路径数据已重写为像素风格的“张文涛” */
+    d="
+      /* 张 (Simplified) - 左侧长撇与右侧横折钩的像素化简写 */
+      M10 30h30v5H15v15h20v5H15v25h25v5H10V30zm35 0h5v40h15v5H45V30zm20 10h5v25h-5V40z
+      /* 文 - 顶部一点，中部横，下部撇捺 */
+      M90 20h10v5H90v-5zm75 15h40v5h-15v10h10v5h-10v25h-5v-25h-10v25h-5v-25h-10v-5h10v-10H75v-5z
+      /* 涛 - 左侧三点水，右侧寿字头与方块底 */
+      M145 30h5v10h-5V30zm0 20h5v10h-5V50zm-5 25h5v5h-5v-5zm20-45h40v5h-40v-5zm10 10h20v5h-20v-5zm-5 10h30v5h-30v-5zm12 10h6v25h-6V40zm-12 5h30v15h-30V45z
+    "
     {...props}
-  >
-    张文涛
-  </text>
+  />
 );
 
-type IZwtIconProps = BasicsProps<'svg'>;
-export const ZwtIcon: React.FC<IZwtIconProps> = (props) => (
-  <svg 
-    xmlns="www.w3.org" 
-    width="200" 
-    height="100" 
-    viewBox="0 0 200 100" 
-    {...props}
-  >
-    {/* 默认白色填充 */}
-    <ZwtPath fill="#fff" />
+type IFutiIconProps = BasicsProps<'svg'>;
+export const FutiIcon: React.FC<IFutiIconProps> = (props) => (
+  <svg xmlns="www.w3.org" width="300" height="128.094" fill="none" viewBox="0 0 300 128.094" {...props}>
+    <FutiPath fill="#fff" />
   </svg>
 );
 
-type IZwtClipPathProps = BasicsProps<'svg', 'id'>;
-export const ZwtClipPath: React.FC<IZwtClipPathProps> = ({ id = 'zwt-icon-clip', ...props }) => (
-  <svg aria-hidden {...props} style={{ position: 'absolute', width: 0, height: 0 }}>
-    <defs>
-      <clipPath id={id}>
-        {/* clipPath 内部也使用相同的文字路径 */}
-        <ZwtPath />
-      </clipPath>
-    </defs>
+type IFutiClipPathProps = BasicsProps<'svg', 'id'>;
+export const FutiClipPath: React.FC<IFutiClipPathProps> = ({ id = 'futi-icon-clip', ...props }) => (
+  <svg aria-hidden {...props}>
+    <clipPath id={id}>
+      <FutiPath />
+    </clipPath>
   </svg>
 );
+
