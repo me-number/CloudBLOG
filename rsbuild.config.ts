@@ -15,23 +15,20 @@ export default defineConfig({
   ],
   html: {
     title: '张文涛',
+    // 强制注入 HTML 标签属性（2025年 Rsbuild 最稳妥方案）
+    tags: [
+      {
+        tag: 'html',
+        attrs: { lang: 'zh-CN' },
+      },
+    ],
     meta: {
       description: "一位正在努力钻研技术的全栈开发者，在 0 与 1 之间构建梦想!",
     },
   },
-  // 核心修复步骤：强制注入 lang 属性到 html 标签
-  tools: {
-    htmlPlugin(config) {
-      if (typeof config === 'object') {
-        config.attributes = {
-          ...config.attributes,
-          lang: 'zh-CN', // 强制在 HTML 标签添加 lang="zh-CN"
-        };
-      }
-    },
-  },
   output: {
-    // 如果是自定义域名，使用 '/'；如果是 github.io/repo/，请改为 '/repo/'
+    // 提醒：如果您部署在 zhang-wentao.tech，此处为 '/' 是正确的。
+    // 如果部署在 https://<username>.github.io/CloudBLOG/，请务必改为 '/CloudBLOG/'
     assetPrefix: '/',
   },
 });
